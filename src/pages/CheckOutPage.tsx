@@ -59,15 +59,59 @@ const CheckOutPage = (props: Props) => {
     },
     // More products...
   ]
+  // for saved address
+  const addresses = [
+    {
+      id: 1,
+      streetAddress: "123 Main Street",
+      city: "Anytown",
+      state: "CA",
+      country: "USA",
+      zipCode: "12345",
+      email: "example1@email.com",
+      phoneNumber: "123-456-7890",
+    },
+    {
+      id: 2,
+      streetAddress: "456 Elm Street",
+      city: "Anothertown",
+      state: "NY",
+      country: "USA",
+      zipCode: "56789",
+      email: "example2@email.com",
+      phoneNumber: "987-654-3210",
+    },
+    {
+      id: 3,
+      streetAddress: "789 Oak Street",
+      city: "Thirdtown",
+      state: "TX",
+      country: "USA",
+      zipCode: "11122",
+      email: "example3@email.com",
+      phoneNumber: "555-123-4567",
+    },
+    {
+      id: 4,
+      streetAddress: "101 Pine Street",
+      city: "Fourthtown",
+      state: "FL",
+      country: "USA",
+      zipCode: "33344",
+      email: "example4@email.com",
+      phoneNumber: "444-555-6667",
+    },
+  ]
+
   return (
     <>
       {" "}
       <Navbar />
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-14 flex flex-col md:flex-row gap-5 items-start justify-between">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-6 flex flex-col md:flex-row gap-5 items-start justify-between">
         {/* checkout form started */}
-        <form className="bg-white rounded-lg p-3 px-5 shadow w-full md:w-auto flex-1">
+        <form className="bg-white rounded-lg p-3 px-5 shadow w-full md:w-auto flex-1 mb-5">
           {/* form feilds */}
-          <div className="border-b border-gray-900/10 pb-12">
+          <div>
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Personal Information
             </h2>
@@ -227,7 +271,7 @@ const CheckOutPage = (props: Props) => {
           {/* form feilds end*/}
 
           {/* buttons */}
-          <div className="mt-6 flex items-center justify-end gap-x-6">
+          <div className="mt-6 flex items-center justify-end gap-x-6 border-b border-gray-900/10 pb-5">
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-gray-900"
@@ -242,6 +286,62 @@ const CheckOutPage = (props: Props) => {
             </button>
           </div>
           {/* buttons end*/}
+
+          {/* saved address */}
+          <ul role="list" className="divide-y divide-gray-100">
+            {addresses.map(address => (
+              <div className="flex items-center gap-x-3 w-full">
+                <input
+                  id="address_selection"
+                  name="address"
+                  type="radio"
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label
+                  htmlFor="address_selection"
+                  className="block text-sm font-medium leading-6 text-gray-900 w-full"
+                >
+                  <li
+                    key={address.id}
+                    className="flex justify-between gap-x-6 py-5 w-full"
+                  >
+                    <div className="flex min-w-0 gap-x-4">
+                      <div className="min-w-0 flex-auto">
+                        <p className="text-sm font-semibold leading-6 text-gray-900">
+                          City: {address.city}
+                        </p>
+                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                          Street: {address.streetAddress}
+                          <br />
+                          Zip Code: <span>{address.zipCode}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                      <p className="text-sm leading-6 text-gray-900">
+                        {address.phoneNumber}
+                      </p>
+                      {address.email ? (
+                        <p className="mt-1 text-xs leading-5 text-gray-500">
+                          {address.email}
+                        </p>
+                      ) : (
+                        <div className="mt-1 flex items-center gap-x-1.5">
+                          <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                          </div>
+                          <p className="text-xs leading-5 text-gray-500">
+                            Online
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                </label>
+              </div>
+            ))}
+          </ul>
+          {/* saved address end */}
         </form>
         {/* cart section */}
         <div className="bg-white rounded-lg p-3 px-5 shadow w-full md:w-auto">

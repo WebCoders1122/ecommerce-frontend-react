@@ -19,8 +19,8 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid"
-import ProductList from "../features/ProductList/ProductList"
 import Pagination from "./Pagination"
+import ProductList from "../features/ProductList/components/ProductList"
 
 // options and fitlers of sidebars
 const sortOptions = [
