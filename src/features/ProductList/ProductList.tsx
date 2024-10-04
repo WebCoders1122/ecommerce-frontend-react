@@ -2,44 +2,49 @@
 const products = [
   {
     id: 1,
-    name: "Basic Tee",
+    name: "Earthen Bottle",
     href: "#",
+    price: "$48",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
+      "https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-01.jpg",
+    imageAlt:
+      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
+    color: "earthen-brown", // Replace with the desired color for this product
   },
   {
     id: 2,
-    name: "Basic Tee",
+    name: "Nomad Tumbler",
     href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
-    color: "Black",
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-02.jpg",
+    imageAlt:
+      "Olive drab green insulated bottle with flared screw lid and flat top.",
+    color: "olive-drab", // Replace with the desired color for this product
   },
   {
     id: 3,
-    name: "Basic Tee",
+    name: "Focus Paper Refill",
     href: "#",
+    price: "$89",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
+      "https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-03.jpg",
+    imageAlt:
+      "Person using a pen to cross a task off a productivity paper card.",
+    color: "pale-yellow", // Replace with the desired color for this product
   },
   {
     id: 4,
-    name: "Basic Tee",
+    name: "Machined Mechanical Pencil",
     href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
-    color: "Black",
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-04.jpg",
+    imageAlt:
+      "Hand holding black machined steel mechanical pencil with brass tip and top.",
+    color: "dark-gray", // Replace with the desired color for this product
   },
+  // More products...
 ]
 
 const ProductList = () => {

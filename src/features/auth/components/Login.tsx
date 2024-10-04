@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 type Props = {}
 const Login = (props: Props) => {
   return (
@@ -9,7 +11,7 @@ const Login = (props: Props) => {
           className="mx-auto h-10 w-auto"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign in to your account
+          Login to your account
         </h2>
       </div>
 
@@ -68,19 +70,19 @@ const Login = (props: Props) => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Login
             </button>
           </div>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{" "}
-          <a
-            href="#"
+          Not Registered?{" "}
+          <Link
+            to="/signup"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
-            Start a 14 day free trial
-          </a>
+            Create an Account
+          </Link>
         </p>
       </div>
     </div>
