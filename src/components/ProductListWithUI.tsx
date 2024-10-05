@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -10,47 +10,47 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-} from "@headlessui/react"
-import { XMarkIcon } from "@heroicons/react/24/outline"
+} from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   FunnelIcon,
   MinusIcon,
   PlusIcon,
   Squares2X2Icon,
-} from "@heroicons/react/20/solid"
-import Pagination from "./Pagination"
-import ProductList from "../features/ProductList/components/ProductList"
-import { useDispatch, useSelector } from "react-redux"
+} from "@heroicons/react/20/solid";
+import Pagination from "./Pagination";
+import ProductList from "../features/ProductList/components/ProductList";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProductsByQuery,
   selectBrands,
   selectCategories,
-} from "../features/ProductList/productListSlice"
-import { AppDispatch } from "../app/store"
+} from "../features/ProductList/productListSlice";
+import { AppDispatch } from "../app/store";
 
 // options and fitlers of sidebars
-const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-]
+const sortOptions: SortOptionType[] = [
+  // { name: "Most Popular", href: "#", current: true },
+  // { name: "Best Rating", href: "#", current: false },
+  // { name: "Newest", href: "#", current: false },
+  { name: "Price: Low to High", query: "price", order: "asc", current: false },
+  { name: "Price: High to Low", query: "price", order: "desc", current: false },
+];
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ")
+  return classes.filter(Boolean).join(" ");
 }
 
 const ProductListWithUI = () => {
   //state to hold sort options
-  const [filterOptions, setFilterOptions] = useState<FilterOptionsType[]>([])
+  const [filterOptions, setFilterOptions] = useState<FilterOptionsType[]>([]);
 
   //unique brands and categroies
-  const brands: CategoryType[] = useSelector(selectBrands)
-  const categories: CategoryType[] = useSelector(selectCategories)
+  const brands: CategoryType[] = useSelector(selectBrands);
+  const categories: CategoryType[] = useSelector(selectCategories);
   //dispatch
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch();
   const filters = [
     // {
     //   id: "color",
@@ -74,29 +74,40 @@ const ProductListWithUI = () => {
       name: "Brands",
       options: brands,
     },
-  ]
+  ];
   // to handle mobile sidebar
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   // to handle sort options
   const handleChangeFilter = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    // todo:uncomment the code for server-side multi values search
     // console.log(e.target.checked)
     // if (!e.target.checked) {
     //   let newFilterOptions = filterOptions.filter(
     //     item => item.value !== e.target.value,
     //   )
-    //   console.log(newFilterOptions)
     //   setFilterOptions(newFilterOptions)
     //   dispatch(fetchProductsByQuery(newFilterOptions))
     // } else {
     let newFilterOptions: FilterOptionsType[] = [
       // ...filterOptions,
       { key: e.target.name, value: e.target.value },
-    ]
-    console.log(newFilterOptions)
-    setFilterOptions(newFilterOptions)
-    dispatch(fetchProductsByQuery(newFilterOptions))
+    ];
+    setFilterOptions(newFilterOptions);
+    dispatch(fetchProductsByQuery(newFilterOptions));
     // }
-  }
+  };
+  const handleSort = (
+    e: React.MouseEvent<HTMLParagraphElement, MouseEvent>,
+    option: SortOptionType,
+  ): void => {
+    console.log("handle sort");
+    let newFilterOptions = [
+      ...filterOptions,
+      { sortBy: option.query, order: option.order },
+    ];
+    setFilterOptions(newFilterOptions);
+    dispatch(fetchProductsByQuery(newFilterOptions));
+  };
 
   return (
     <div className="bg-white">
@@ -211,8 +222,8 @@ const ProductListWithUI = () => {
                   <div className="py-1">
                     {sortOptions.map(option => (
                       <MenuItem key={option.name}>
-                        <a
-                          href={option.href}
+                        <p
+                          onMouseDownCapture={e => handleSort(e, option)}
                           className={classNames(
                             option.current
                               ? "font-medium text-gray-900"
@@ -221,7 +232,7 @@ const ProductListWithUI = () => {
                           )}
                         >
                           {option.name}
-                        </a>
+                        </p>
                       </MenuItem>
                     ))}
                   </div>
@@ -314,6 +325,6 @@ const ProductListWithUI = () => {
         </main>
       </div>
     </div>
-  )
-}
-export default ProductListWithUI
+  );
+};
+export default ProductListWithUI;

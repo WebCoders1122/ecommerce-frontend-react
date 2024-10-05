@@ -1,13 +1,13 @@
-import { createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
-import { createAppSlice } from "../../app/createAppSlice"
-import { fetchProducts, fetchProductsBy__Query } from "./productListAPI"
+import { createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
+import { createAppSlice } from "../../app/createAppSlice";
+import { fetchProducts, fetchProductsBy__Query } from "./productListAPI";
 
 export interface ProductSliceStateType {
-  leading: boolean
-  products: ProductType[]
-  error: string
-  brands: CategoryType[]
-  categories: CategoryType[]
+  leading: boolean;
+  products: ProductType[];
+  error: string;
+  brands: CategoryType[];
+  categories: CategoryType[];
 }
 
 const initialState: ProductSliceStateType = {
@@ -228,29 +228,29 @@ const initialState: ProductSliceStateType = {
       checked: false,
     },
   ],
-}
+};
 
 //creating async function to fetch products
 export const fetchAllProductsAsync = createAsyncThunk(
   "products/fetchAllProducts",
   async () => {
-    const response: ProductType[] = await fetchProducts()
+    const response: ProductType[] = await fetchProducts();
     // The value we return becomes the `fulfilled` action payload
-    return response
+    return response;
   },
-)
+);
 
 export const fetchProductsByQuery = createAsyncThunk(
   "products/fetchProductsByQuery",
   async (query: FilterOptionsType[]) => {
-    const response: ProductType[] = await fetchProductsBy__Query(query)
+    console.log(query, "query");
+    const response: ProductType[] = await fetchProductsBy__Query(query);
     // The value we return becomes the `fulfilled` action payload
-    console.log(response)
-    return response
+    return response;
   },
-)
+);
 
-export const ProductSlice = createAppSlice({
+export const ProductSlice: any = createAppSlice({
   name: "products",
   initialState,
   reducers: create => ({
@@ -290,43 +290,42 @@ export const ProductSlice = createAppSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchAllProductsAsync.pending, state => {
-        state.leading = true
-        state.error = ""
+        state.leading = true;
+        state.error = "";
       })
       .addCase(
         fetchAllProductsAsync.fulfilled,
         (state, action: PayloadAction<ProductType[]>) => {
-          state.leading = false
-          state.products = action.payload
-          state.error = ""
+          state.leading = false;
+          state.products = action.payload;
+          state.error = "";
         },
       )
       .addCase(fetchAllProductsAsync.rejected, state => {
-        state.leading = false
-        state.error = "Error fetching products"
+        state.leading = false;
+        state.error = "Error fetching products";
       })
       .addCase(fetchProductsByQuery.pending, state => {
-        state.leading = true
-        state.error = ""
+        state.leading = true;
+        state.error = "";
       })
       .addCase(
         fetchProductsByQuery.fulfilled,
         (state, action: PayloadAction<ProductType[]>) => {
-          state.leading = false
-          //finding unique products
+          state.leading = false;
 
-          state.products = [
-            ...new Set(
-              action.payload.filter(product => product.brand !== undefined),
-            ),
-          ]
-          state.error = ""
+          //finding unique products
+          state.products = action.payload.filter(
+            product => product.brand !== undefined,
+          );
+
+          state.error = "";
         },
       )
       .addCase(fetchProductsByQuery.rejected, state => {
-        state.leading = false
-        state.error = "Error fetching products"
-      })
+        state.leading = false;
+        state.error = "Error fetching products";
+      });
   },
   // You can define your selectors here. These selectors receive the slice
   selectors: {
@@ -335,7 +334,7 @@ export const ProductSlice = createAppSlice({
     selectBrands: products => products.brands,
     selectCategories: products => products.categories,
   },
-})
+});
 
 // exporting actions
 // export const { write actions here } =
@@ -347,7 +346,7 @@ export const {
   selectLeading,
   selectBrands,
   selectCategories,
-} = ProductSlice.selectors
+} = ProductSlice.selectors;
 
 //exporting reducer
-export default ProductSlice.reducer
+export default ProductSlice.reducer;

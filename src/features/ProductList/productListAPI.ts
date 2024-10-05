@@ -1,24 +1,28 @@
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios";
 
 export const fetchProducts = async () => {
   const response: AxiosResponse = await axios.get(
     "https://dummyjson.com/products",
-  )
-  console.log(response)
-  return response.data.products
-}
+  );
+  return response.data.products;
+};
 
 export const fetchProductsBy__Query = async (query: FilterOptionsType[]) => {
-  let queryString = query.map(item => {
-    return item.key === "category"
-      ? `/category/${item.value}`
-      : "/search?q" + "=" + item.value.split(" ").join("-")
-  })
-  console.log(queryString)
+  let queryString = "";
+  query.map(item => {
+    if (item.sortBy) {
+      queryString = `?sortBy=${item.sortBy}&order=${item.order}`;
+    } else {
+      item.key === "category"
+        ? (queryString = `/category/${item.value}`)
+        : (queryString = "/search?q" + "=" + item.value?.split(" ").join("-"));
+    }
+  });
   const response: AxiosResponse = await axios.get(
-    `https://dummyjson.com/products${queryString[0]}`,
-  )
+    `https://dummyjson.com/products${queryString}`,
+  );
+  console.log(response.data.products, "response.data.products");
+  return response.data.products;
+};
 
-  console.log(response, queryString)
-  return response.data.products
-}
+//todo: remove all un necessary console logs

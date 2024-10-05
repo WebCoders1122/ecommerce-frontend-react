@@ -1,19 +1,19 @@
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import { fetchAllProductsAsync, selectAllProducts } from "../productListSlice"
-import { useEffect } from "react"
-import { AppDispatch } from "../../../app/store"
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { fetchAllProductsAsync, selectAllProducts } from "../productListSlice";
+import { useEffect } from "react";
+import { AppDispatch } from "../../../app/store";
 
 const ProductList = () => {
   // this is product data
-  const products: ProductType[] = useSelector(selectAllProducts)
-  // console.log(products)
+  const products: ProductType[] = useSelector(selectAllProducts);
   //dispatch
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   //for fetching data
   useEffect(() => {
-    const products = dispatch(fetchAllProductsAsync())
-  }, [dispatch])
+    const products = dispatch(fetchAllProductsAsync());
+  }, [dispatch]);
+  console.log(products);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -51,6 +51,6 @@ const ProductList = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default ProductList
+  );
+};
+export default ProductList;

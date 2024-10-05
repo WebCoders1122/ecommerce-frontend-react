@@ -39,6 +39,15 @@ type Review = {
 type CategoryType = { value: string; label: string; checked: boolean }
 
 type FilterOptionsType = {
-  key: string
-  value: string
+  key?: string
+  value?: string
+  sortBy?: string
+  order?: string
+}
+
+type SortOptionType = {
+  name: string
+  query: string
+  order: string
+  current: boolean
 }
