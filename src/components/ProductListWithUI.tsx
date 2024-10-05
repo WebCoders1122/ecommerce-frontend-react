@@ -21,6 +21,13 @@ import {
 } from "@heroicons/react/20/solid"
 import Pagination from "./Pagination"
 import ProductList from "../features/ProductList/components/ProductList"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  fetchProductsByQuery,
+  selectBrands,
+  selectCategories,
+} from "../features/ProductList/productListSlice"
+import { AppDispatch } from "../app/store"
 
 // options and fitlers of sidebars
 const sortOptions = [
@@ -30,51 +37,66 @@ const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ]
-const filters = [
-  {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
-    ],
-  },
-  {
-    id: "size",
-    name: "Size",
-    options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
-      { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
-    ],
-  },
-]
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
 const ProductListWithUI = () => {
+  //state to hold sort options
+  const [filterOptions, setFilterOptions] = useState<FilterOptionsType[]>([])
+
+  //unique brands and categroies
+  const brands: CategoryType[] = useSelector(selectBrands)
+  const categories: CategoryType[] = useSelector(selectCategories)
+  //dispatch
+  const dispatch: AppDispatch = useDispatch()
+  const filters = [
+    // {
+    //   id: "color",
+    //   name: "Color",
+    //   options: [
+    //     { value: "white", label: "White", checked: false },
+    //     { value: "beige", label: "Beige", checked: false },
+    //     { value: "blue", label: "Blue", checked: true },
+    //     { value: "brown", label: "Brown", checked: false },
+    //     { value: "green", label: "Green", checked: false },
+    //     { value: "purple", label: "Purple", checked: false },
+    //   ],
+    // },
+    {
+      id: "category",
+      name: "Category",
+      options: categories,
+    },
+    {
+      id: "brand",
+      name: "Brands",
+      options: brands,
+    },
+  ]
   // to handle mobile sidebar
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  // to handle sort options
+  const handleChangeFilter = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    // console.log(e.target.checked)
+    // if (!e.target.checked) {
+    //   let newFilterOptions = filterOptions.filter(
+    //     item => item.value !== e.target.value,
+    //   )
+    //   console.log(newFilterOptions)
+    //   setFilterOptions(newFilterOptions)
+    //   dispatch(fetchProductsByQuery(newFilterOptions))
+    // } else {
+    let newFilterOptions: FilterOptionsType[] = [
+      // ...filterOptions,
+      { key: e.target.name, value: e.target.value },
+    ]
+    console.log(newFilterOptions)
+    setFilterOptions(newFilterOptions)
+    dispatch(fetchProductsByQuery(newFilterOptions))
+    // }
+  }
 
   return (
     <div className="bg-white">
@@ -132,6 +154,7 @@ const ProductListWithUI = () => {
                         </span>
                       </DisclosureButton>
                     </h3>
+                    {/* mobile menu start */}
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-6">
                         {section.options.map((option, optionIdx) => (
@@ -140,7 +163,8 @@ const ProductListWithUI = () => {
                               defaultValue={option.value}
                               defaultChecked={option.checked}
                               id={`filter-mobile-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
+                              name={`${section.id}`}
+                              onChange={handleChangeFilter}
                               type="checkbox"
                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
@@ -154,6 +178,7 @@ const ProductListWithUI = () => {
                         ))}
                       </div>
                     </DisclosurePanel>
+                    {/* mobile menu end */}
                   </Disclosure>
                 ))}
               </form>
@@ -260,7 +285,8 @@ const ProductListWithUI = () => {
                               defaultValue={option.value}
                               defaultChecked={option.checked}
                               id={`filter-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
+                              name={`${section.id}`}
+                              onChange={handleChangeFilter}
                               type="checkbox"
                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />

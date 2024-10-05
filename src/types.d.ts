@@ -35,3 +35,10 @@ type Review = {
   reviewerName: string
   reviewerEmail: string
 }
+
+type CategoryType = { value: string; label: string; checked: boolean }
+
+type FilterOptionsType = {
+  key: string
+  value: string
+}

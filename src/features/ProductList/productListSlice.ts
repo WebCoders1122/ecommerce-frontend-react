@@ -1,17 +1,233 @@
 import { createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
-import { fetchProducts } from "./productListAPI"
+import { fetchProducts, fetchProductsBy__Query } from "./productListAPI"
 
 export interface ProductSliceStateType {
   leading: boolean
   products: ProductType[]
   error: string
+  brands: CategoryType[]
+  categories: CategoryType[]
 }
 
 const initialState: ProductSliceStateType = {
   leading: false,
   products: [],
   error: "",
+  brands: [
+    {
+      value: "Essence",
+      label: "Essence",
+      checked: false,
+    },
+    {
+      value: "Glamour Beauty",
+      label: "Glamour Beauty",
+      checked: false,
+    },
+    {
+      value: "Velvet Touch",
+      label: "Velvet Touch",
+      checked: false,
+    },
+    {
+      value: "Chic Cosmetics",
+      label: "Chic Cosmetics",
+      checked: false,
+    },
+    {
+      value: "Nail Couture",
+      label: "Nail Couture",
+      checked: false,
+    },
+    {
+      value: "Calvin Klein",
+      label: "Calvin Klein",
+      checked: false,
+    },
+    {
+      value: "Chanel",
+      label: "Chanel",
+      checked: false,
+    },
+    {
+      value: "Dior",
+      label: "Dior",
+      checked: false,
+    },
+    {
+      value: "Dolce & Gabbana",
+      label: "Dolce & Gabbana",
+      checked: false,
+    },
+    {
+      value: "Gucci",
+      label: "Gucci",
+      checked: false,
+    },
+    {
+      value: "Annibale Colombo",
+      label: "Annibale Colombo",
+      checked: false,
+    },
+    {
+      value: "Furniture Co.",
+      label: "Furniture Co.",
+      checked: false,
+    },
+    {
+      value: "Knoll",
+      label: "Knoll",
+      checked: false,
+    },
+    {
+      value: "Bath Trends",
+      label: "Bath Trends",
+      checked: false,
+    },
+    {
+      value: "Apple",
+      label: "Apple",
+      checked: false,
+    },
+    {
+      value: "Asus",
+      label: "Asus",
+      checked: false,
+    },
+    {
+      value: "Huawei",
+      label: "Huawei",
+      checked: false,
+    },
+    {
+      value: "Lenovo",
+      label: "Lenovo",
+      checked: false,
+    },
+    {
+      value: "Dell",
+      label: "Dell",
+      checked: false,
+    },
+    {
+      value: "Fashion Trends",
+      label: "Fashion Trends",
+      checked: false,
+    },
+    {
+      value: "Gigabyte",
+      label: "Gigabyte",
+      checked: false,
+    },
+    {
+      value: "Classic Wear",
+      label: "Classic Wear",
+      checked: false,
+    },
+    {
+      value: "Casual Comfort",
+      label: "Casual Comfort",
+      checked: false,
+    },
+    {
+      value: "Urban Chic",
+      label: "Urban Chic",
+      checked: false,
+    },
+    {
+      value: "Nike",
+      label: "Nike",
+      checked: false,
+    },
+    {
+      value: "Puma",
+      label: "Puma",
+      checked: false,
+    },
+    {
+      value: "Off White",
+      label: "Off White",
+      checked: false,
+    },
+    {
+      value: "Fashion Timepieces",
+      label: "Fashion Timepieces",
+      checked: false,
+    },
+    {
+      value: "Longines",
+      label: "Longines",
+      checked: false,
+    },
+    {
+      value: "Rolex",
+      label: "Rolex",
+      checked: false,
+    },
+    {
+      value: "Amazon",
+      label: "Amazon",
+      checked: false,
+    },
+  ],
+  categories: [
+    {
+      value: "Beauty",
+      label: "Beauty",
+      checked: false,
+    },
+    {
+      value: "Fragrances",
+      label: "Fragrances",
+      checked: false,
+    },
+    {
+      value: "Furniture",
+      label: "Furniture",
+      checked: false,
+    },
+    {
+      value: "Groceries",
+      label: "Groceries",
+      checked: false,
+    },
+    {
+      value: "Home decoration",
+      label: "Home decoration",
+      checked: false,
+    },
+    {
+      value: "Kitchen accessories",
+      label: "Kitchen accessories",
+      checked: false,
+    },
+    {
+      value: "Laptops",
+      label: "Laptops",
+      checked: false,
+    },
+    {
+      value: "Mens shirts",
+      label: "Mens shirts",
+      checked: false,
+    },
+    {
+      value: "Mens shoes",
+      label: "Mens shoes",
+      checked: false,
+    },
+    {
+      value: "Mens watches",
+      label: "Mens watches",
+      checked: false,
+    },
+    {
+      value: "Mobile accessories",
+      label: "Mobile accessories",
+      checked: false,
+    },
+  ],
 }
 
 //creating async function to fetch products
@@ -20,6 +236,16 @@ export const fetchAllProductsAsync = createAsyncThunk(
   async () => {
     const response: ProductType[] = await fetchProducts()
     // The value we return becomes the `fulfilled` action payload
+    return response
+  },
+)
+
+export const fetchProductsByQuery = createAsyncThunk(
+  "products/fetchProductsByQuery",
+  async (query: FilterOptionsType[]) => {
+    const response: ProductType[] = await fetchProductsBy__Query(query)
+    // The value we return becomes the `fulfilled` action payload
+    console.log(response)
     return response
   },
 )
@@ -79,11 +305,35 @@ export const ProductSlice = createAppSlice({
         state.leading = false
         state.error = "Error fetching products"
       })
+      .addCase(fetchProductsByQuery.pending, state => {
+        state.leading = true
+        state.error = ""
+      })
+      .addCase(
+        fetchProductsByQuery.fulfilled,
+        (state, action: PayloadAction<ProductType[]>) => {
+          state.leading = false
+          //finding unique products
+
+          state.products = [
+            ...new Set(
+              action.payload.filter(product => product.brand !== undefined),
+            ),
+          ]
+          state.error = ""
+        },
+      )
+      .addCase(fetchProductsByQuery.rejected, state => {
+        state.leading = false
+        state.error = "Error fetching products"
+      })
   },
   // You can define your selectors here. These selectors receive the slice
   selectors: {
     selectAllProducts: products => products.products,
     selectLeading: products => products.leading,
+    selectBrands: products => products.brands,
+    selectCategories: products => products.categories,
   },
 })
 
@@ -92,7 +342,12 @@ export const ProductSlice = createAppSlice({
 //   ProductSlice.actions
 
 //exporiting selectors
-export const { selectAllProducts, selectLeading } = ProductSlice.selectors
+export const {
+  selectAllProducts,
+  selectLeading,
+  selectBrands,
+  selectCategories,
+} = ProductSlice.selectors
 
 //exporting reducer
 export default ProductSlice.reducer
