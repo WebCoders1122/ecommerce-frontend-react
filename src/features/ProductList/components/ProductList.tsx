@@ -1,8 +1,8 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchAllProductsAsync, selectAllProducts } from "../productListSlice";
-import { useEffect } from "react";
 import { AppDispatch } from "../../../app/store";
+import { fetchProductsByQuery, selectAllProducts } from "../productListSlice";
 
 const ProductList = () => {
   // this is product data
@@ -11,15 +11,14 @@ const ProductList = () => {
   const dispatch = useDispatch<AppDispatch>();
   //for fetching data
   useEffect(() => {
-    const products = dispatch(fetchAllProductsAsync());
+    const products = dispatch(fetchProductsByQuery({}));
   }, [dispatch]);
-  console.log(products);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+        {/* <h2 className="text-2xl font-bold tracking-tight text-gray-900">
           Customers also purchased
-        </h2>
+        </h2> */}
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
           {products.map(product => (

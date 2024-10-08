@@ -1,27 +1,28 @@
 import axios, { AxiosResponse } from "axios";
 
-export const fetchProducts = async () => {
-  const response: AxiosResponse = await axios.get(
-    "https://dummyjson.com/products",
-  );
-  return response.data.products;
-};
-
-export const fetchProductsBy__Query = async (query: FilterOptionsType[]) => {
+export const fetchProductsBy__Query = async ({
+  filters,
+  sort,
+}: {
+  filters?: FilterOptionsType[];
+  sort?: SortOptionsType[];
+}) => {
   let queryString = "";
-  query.map(item => {
-    if (item.sortBy) {
-      queryString = `?sortBy=${item.sortBy}&order=${item.order}`;
-    } else {
-      item.key === "category"
-        ? (queryString = `/category/${item.value}`)
-        : (queryString = "/search?q" + "=" + item.value?.split(" ").join("-"));
+  filters?.map(item => {
+    // todo: this should be corrected as per query search in real database
+    item.key === "category"
+      ? (queryString = `/category/${item.value}`)
+      : (queryString = "/search?q" + "=" + item.value?.split(" ").join("-"));
+    if (sort?.length) {
+      sort?.map(item => {
+        queryString += `&sortBy=${item.sortBy}&order=${item.order}`;
+      });
     }
   });
+  console.log(queryString);
   const response: AxiosResponse = await axios.get(
     `https://dummyjson.com/products${queryString}`,
   );
-  console.log(response.data.products, "response.data.products");
   return response.data.products;
 };
 

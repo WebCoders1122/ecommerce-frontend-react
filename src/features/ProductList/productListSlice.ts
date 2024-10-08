@@ -1,6 +1,6 @@
 import { createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
-import { fetchProducts, fetchProductsBy__Query } from "./productListAPI";
+import { fetchProductsBy__Query } from "./productListAPI";
 
 export interface ProductSliceStateType {
   leading: boolean;
@@ -230,21 +230,19 @@ const initialState: ProductSliceStateType = {
   ],
 };
 
-//creating async function to fetch products
-export const fetchAllProductsAsync = createAsyncThunk(
-  "products/fetchAllProducts",
-  async () => {
-    const response: ProductType[] = await fetchProducts();
-    // The value we return becomes the `fulfilled` action payload
-    return response;
-  },
-);
-
 export const fetchProductsByQuery = createAsyncThunk(
   "products/fetchProductsByQuery",
-  async (query: FilterOptionsType[]) => {
-    console.log(query, "query");
-    const response: ProductType[] = await fetchProductsBy__Query(query);
+  async ({
+    filters,
+    sort,
+  }: {
+    filters?: FilterOptionsType[];
+    sort?: SortOptionsType[];
+  }) => {
+    const response: ProductType[] = await fetchProductsBy__Query({
+      filters,
+      sort,
+    });
     // The value we return becomes the `fulfilled` action payload
     return response;
   },
@@ -289,22 +287,6 @@ export const ProductSlice: any = createAppSlice({
   }),
   extraReducers: builder => {
     builder
-      .addCase(fetchAllProductsAsync.pending, state => {
-        state.leading = true;
-        state.error = "";
-      })
-      .addCase(
-        fetchAllProductsAsync.fulfilled,
-        (state, action: PayloadAction<ProductType[]>) => {
-          state.leading = false;
-          state.products = action.payload;
-          state.error = "";
-        },
-      )
-      .addCase(fetchAllProductsAsync.rejected, state => {
-        state.leading = false;
-        state.error = "Error fetching products";
-      })
       .addCase(fetchProductsByQuery.pending, state => {
         state.leading = true;
         state.error = "";
