@@ -39,8 +39,7 @@ type Review = {
 type CategoryType = { value: string; label: string; checked: boolean };
 
 type FilterOptionsType = {
-  key: string;
-  value: string;
+  [key: string]: string;
 };
 
 type SortType = {
@@ -57,11 +56,11 @@ type FiltersType = {
 }[];
 
 type SortOptionsType = {
-  sortBy: string;
+  _sort: string;
   order: string;
 };
 
 type PaginationType = {
-  [skip: string]: number;
-  [limit: string]: number;
+  [_page: string]: number;
+  [_per_page: string]: number;
 };

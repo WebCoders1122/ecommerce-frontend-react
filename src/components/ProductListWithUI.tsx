@@ -18,11 +18,14 @@ import {
   MinusIcon,
   PlusIcon,
   Squares2X2Icon,
+  StarIcon,
 } from "@heroicons/react/20/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchBrandsAsync,
+  fetchCategoriesAsync,
   fetchProductsByQuery,
   selectAllProducts,
   selectBrands,
@@ -49,14 +52,18 @@ function classNames(...classes: string[]) {
 const ProductListWithUI = () => {
   //state to hold sort options
   const [filterOptions, setFilterOptions] = useState<FilterOptionsType[]>([]);
-  const [sortQuery, setSortQuery] = useState<SortOptionsType[]>([]);
+  const [sortQuery, setSortQuery] = useState<SortOptionsType>({
+    _sort: "",
+    order: "",
+  });
   // this is product data
   const products: ProductType[] = useSelector(selectAllProducts);
-
   //unique brands and categroies
   const brands: CategoryType[] = useSelector(selectBrands);
   const categories: CategoryType[] = useSelector(selectCategories);
   //dispatch
+  // todo: remove
+  console.log(brands);
   const dispatch: AppDispatch = useDispatch();
   const filters: {
     id: string;
@@ -90,30 +97,34 @@ const ProductListWithUI = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   // to handle sort options
   const handleChangeFilter = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    console.log("filter");
     // todo:uncomment the code for server-side multi values search
-    // console.log(e.target.checked)
     let newFilterOptions: FilterOptionsType[] = [];
     if (!e.target.checked) {
-      newFilterOptions = filterOptions.filter(
-        item => item.value !== e.target.value,
-      );
+      //todo: check this logic
+      newFilterOptions = filterOptions.filter(item => {
+        for (const key in item) {
+          return item[key] !== e.target.value;
+        }
+      });
     } else {
       newFilterOptions = [
         ...filterOptions,
-        { key: (e.target as HTMLInputElement).name, value: e.target.value },
+        { [(e.target as HTMLInputElement).name]: e.target.value },
       ];
-      setFilterOptions(newFilterOptions);
-      setPage(1);
-      dispatch(
-        fetchProductsByQuery({ filters: newFilterOptions, sort: sortQuery }),
-      );
     }
+    setFilterOptions(newFilterOptions);
+    setPage(1);
+    dispatch(
+      fetchProductsByQuery({ filters: newFilterOptions, sort: sortQuery }),
+    );
   };
   const handleSort = (
     e: React.MouseEvent<HTMLParagraphElement, MouseEvent>,
     option: SortType,
   ): void => {
-    let newSortOptions = [{ sortBy: option.query, order: option.order }];
+    console.log("sort;");
+    let newSortOptions = { _sort: option.query, order: option.order };
     setSortQuery(newSortOptions);
     setPage(1);
     dispatch(
@@ -129,8 +140,8 @@ const ProductListWithUI = () => {
   //useEffect for pagination
   useEffect(() => {
     const paginationOptions: PaginationType = {
-      limit: ITEMS_PER_PAGE,
-      skip: (page - 1) * ITEMS_PER_PAGE,
+      _page: page,
+      _per_page: ITEMS_PER_PAGE,
     };
     dispatch(
       fetchProductsByQuery({
@@ -139,7 +150,15 @@ const ProductListWithUI = () => {
         pagination: paginationOptions,
       }),
     );
-  }, [page, dispatch, filterOptions, sortQuery]);
+  }, [page, filterOptions, sortQuery]);
+
+  // to fetch brands and categories
+  useEffect(() => {
+    dispatch(fetchBrandsAsync());
+    dispatch(fetchCategoriesAsync());
+  }, []);
+  // console.log("effect", page, filterOptions, sortQuery);
+
   return (
     <div className="bg-white">
       <div>
@@ -515,15 +534,18 @@ const ProductList = ({ products }: { products: ProductType[] }) => {
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
           {products.map(product => (
-            <div key={product.id} className="group relative">
-              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+            <div
+              key={product.id}
+              className="group relative p-1 rounded-lg border shadow"
+            >
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                 <img
                   alt={product.title}
                   src={product.thumbnail}
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                 />
               </div>
-              <div className="mt-4 flex justify-between">
+              <div className="mt-4 flex justify-between px-3">
                 <div>
                   <h3 className="text-sm text-gray-700">
                     {/* todo: change this # with actual link */}
@@ -532,11 +554,33 @@ const ProductList = ({ products }: { products: ProductType[] }) => {
                       {product.title}
                     </Link>
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">{product.rating}</p>
+                  <p className="mt-1 text-sm text-gray-500">
+                    <span className="align-bottom mr-1">
+                      <StarIcon className="w-6 h-6 inline" />
+                    </span>
+                    {product.rating}
+                  </p>
                 </div>
-                <p className="text-sm font-medium text-gray-900">
-                  {product.price}
-                </p>
+                <div className="flex flex-col justify-end items-end">
+                  {product.discountPercentage > 0 ? (
+                    <p className="text-sm font-medium text-gray-900">
+                      <span className="text-sm border border-green-500 rounded text-green-500 text-[10px] p-0.5">
+                        {Math.floor(product.discountPercentage)}% off
+                      </span>
+                      <br />
+                      <span>
+                        $
+                        {product.price -
+                          Math.round(
+                            product.price * (product.discountPercentage / 100),
+                          )}
+                      </span>
+                    </p>
+                  ) : null}
+                  <p className="text-sm font-sm text-gray-400 line-through">
+                    ${product.price}
+                  </p>
+                </div>
               </div>
             </div>
           ))}

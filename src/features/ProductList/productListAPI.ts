@@ -6,40 +6,68 @@ export const fetchProductsBy__Query = async ({
   pagination,
 }: {
   filters?: FilterOptionsType[];
-  sort?: SortOptionsType[];
+  sort?: SortOptionsType;
   pagination?: PaginationType;
 }) => {
   let queryString = "";
   filters?.map(item => {
     // todo: this should be corrected as per query search in real database
-    item.key === "category"
-      ? (queryString = `/category/${item.value}`)
-      : (queryString = "/search?q" + "=" + item.value?.split(" ").join("-"));
+    for (const key in item) {
+      if (key === "category") {
+        queryString += `${key}=${item[key].split(" ").join("-").toLowerCase()}&`;
+      } else {
+        queryString += `${key}=${item[key].split(" ").join("%20")}&`;
+      }
+    }
   });
   //for adding sort options
-  if (sort?.length) {
-    sort?.map(item => {
-      queryString += `sortBy=${item.sortBy}&order=${item.order}&`;
-    });
+  if (sort?._sort !== "") {
+    queryString += `_sort=${sort?.order === "asc" ? sort?._sort : "-" + sort?._sort}&`;
   }
+  // if (sort?.length) {
+  //   sort?.map(item => {
+  //     queryString += `sortBy=${item.sortBy}&order=${item.order}&`;
+  //   });
+  // }
   //for pagination
   for (const key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
 
-  console.log(queryString);
   const response: AxiosResponse = await axios.get(
-    `https://dummyjson.com/products?${queryString}`,
+    `http://localhost:8080/products?${queryString}`,
   );
-  console.log(response.data.total);
+  //todo: actual products when fetching from original server
+  const totalItems: number = response.data.data.length;
+  // const totalItems: AxiosResponse = await axios.get(
+  //   `http://localhost:8080/total`,
+  // );
+
   const data: {
     products: ProductType[];
     totalProducts: number;
   } = {
-    products: response.data.products,
-    totalProducts: response.data.total,
+    products: response.data.data,
+    totalProducts: totalItems,
   };
   return data;
 };
-
+export const fetchBrands = (): Promise<CategoryType[]> => {
+  return new Promise(async resolve => {
+    let response: AxiosResponse = await axios.get(
+      `http://localhost:8080/brands`,
+    );
+    const data: CategoryType[] = response.data;
+    resolve(data);
+  });
+};
+export const fetchCategories = (): Promise<CategoryType[]> => {
+  return new Promise(async resolve => {
+    let response: AxiosResponse = await axios.get(
+      `http://localhost:8080/category`,
+    );
+    const data: CategoryType[] = response.data;
+    resolve(data);
+  });
+};
 //todo: remove all un necessary console logs
