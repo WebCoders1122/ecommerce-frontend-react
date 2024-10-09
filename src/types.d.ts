@@ -60,3 +60,8 @@ type SortOptionsType = {
   sortBy: string;
   order: string;
 };
+
+type PaginationType = {
+  [skip: string]: number;
+  [limit: string]: number;
+};

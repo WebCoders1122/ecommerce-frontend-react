@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -19,15 +19,19 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import Pagination from "./Pagination";
-import ProductList from "../features/ProductList/components/ProductList";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProductsByQuery,
+  selectAllProducts,
   selectBrands,
   selectCategories,
+  selectTotalProducts,
 } from "../features/ProductList/productListSlice";
 import { AppDispatch } from "../app/store";
+import { ITEMS_PER_PAGE } from "../app/constants";
+import { Link } from "react-router-dom";
 
 // options and fitlers of sidebars
 const sortOptions: SortType[] = [
@@ -46,6 +50,8 @@ const ProductListWithUI = () => {
   //state to hold sort options
   const [filterOptions, setFilterOptions] = useState<FilterOptionsType[]>([]);
   const [sortQuery, setSortQuery] = useState<SortOptionsType[]>([]);
+  // this is product data
+  const products: ProductType[] = useSelector(selectAllProducts);
 
   //unique brands and categroies
   const brands: CategoryType[] = useSelector(selectBrands);
@@ -97,6 +103,7 @@ const ProductListWithUI = () => {
         { key: (e.target as HTMLInputElement).name, value: e.target.value },
       ];
       setFilterOptions(newFilterOptions);
+      setPage(1);
       dispatch(
         fetchProductsByQuery({ filters: newFilterOptions, sort: sortQuery }),
       );
@@ -108,11 +115,31 @@ const ProductListWithUI = () => {
   ): void => {
     let newSortOptions = [{ sortBy: option.query, order: option.order }];
     setSortQuery(newSortOptions);
+    setPage(1);
     dispatch(
       fetchProductsByQuery({ filters: filterOptions, sort: newSortOptions }),
     );
   };
 
+  // ==== this is for pagination
+  //for pagination
+  const [page, setPage] = useState<number>(1);
+  //getting total products and products
+  const totalProducts: number = useSelector(selectTotalProducts);
+  //useEffect for pagination
+  useEffect(() => {
+    const paginationOptions: PaginationType = {
+      limit: ITEMS_PER_PAGE,
+      skip: (page - 1) * ITEMS_PER_PAGE,
+    };
+    dispatch(
+      fetchProductsByQuery({
+        filters: filterOptions,
+        sort: sortQuery,
+        pagination: paginationOptions,
+      }),
+    );
+  }, [page, dispatch, filterOptions, sortQuery]);
   return (
     <div className="bg-white">
       <div>
@@ -200,11 +227,15 @@ const ProductListWithUI = () => {
 
               {/* Product grid */}
               <div className="lg:col-span-3">
-                <ProductList />
+                <ProductList products={products} />
               </div>
             </div>
           </section>
-          <Pagination />
+          <Pagination
+            page={page}
+            setPage={setPage}
+            totalProducts={totalProducts}
+          />
         </main>
       </div>
     </div>
@@ -374,5 +405,143 @@ const DesktopFilters = ({
         </Disclosure>
       ))}
     </form>
+  );
+};
+const Pagination = ({
+  page,
+  setPage,
+  totalProducts,
+}: {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  totalProducts: number;
+}) => {
+  return (
+    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+      <div className="flex flex-1 justify-between sm:hidden">
+        <button
+          onClick={() => setPage(page => (page > 1 ? page - 1 : page))}
+          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          Previous
+        </button>
+        <button
+          onClick={() =>
+            setPage(page =>
+              page < Math.ceil(totalProducts / ITEMS_PER_PAGE)
+                ? page + 1
+                : page,
+            )
+          }
+          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          Next
+        </button>
+      </div>
+      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm text-gray-700">
+            Showing{" "}
+            <span className="font-medium">
+              {(page - 1) * ITEMS_PER_PAGE + 1}
+            </span>{" "}
+            to{" "}
+            <span className="font-medium">
+              {totalProducts > page * ITEMS_PER_PAGE
+                ? page * ITEMS_PER_PAGE
+                : totalProducts}
+            </span>{" "}
+            of <span className="font-medium">{totalProducts}</span> results
+          </p>
+        </div>
+        <div>
+          <nav
+            aria-label="Pagination"
+            className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+          >
+            <button
+              onClick={() => setPage(page => (page > 1 ? page - 1 : page))}
+              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              <span className="sr-only">Previous</span>
+              <ChevronLeftIcon aria-hidden="true" className="h-5 w-5" />
+            </button>
+            {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
+            {Array.from({
+              length: Math.floor(totalProducts / ITEMS_PER_PAGE) + 1,
+            }).map((item, index) => {
+              return (
+                <button
+                  key={"pagination" + index}
+                  aria-current="page"
+                  onClick={() => setPage(index + 1)}
+                  className={
+                    page === index + 1
+                      ? `relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`
+                      : `relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0`
+                  }
+                >
+                  {index + 1}
+                </button>
+              );
+            })}
+            <div
+              onClick={() =>
+                setPage(page =>
+                  page < Math.ceil(totalProducts / ITEMS_PER_PAGE)
+                    ? page + 1
+                    : page,
+                )
+              }
+              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              <span className="sr-only">Next</span>
+              <ChevronRightIcon aria-hidden="true" className="h-5 w-5" />
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ProductList = ({ products }: { products: ProductType[] }) => {
+  return (
+    <div className="bg-white">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        {/* <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+          Customers also purchased
+        </h2> */}
+
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+          {products.map(product => (
+            <div key={product.id} className="group relative">
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                <img
+                  alt={product.title}
+                  src={product.thumbnail}
+                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                />
+              </div>
+              <div className="mt-4 flex justify-between">
+                <div>
+                  <h3 className="text-sm text-gray-700">
+                    {/* todo: change this # with actual link */}
+                    <Link to="/product">
+                      <span aria-hidden="true" className="absolute inset-0" />
+                      {product.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-500">{product.rating}</p>
+                </div>
+                <p className="text-sm font-medium text-gray-900">
+                  {product.price}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };

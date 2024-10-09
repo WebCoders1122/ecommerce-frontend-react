@@ -3,9 +3,11 @@ import axios, { AxiosResponse } from "axios";
 export const fetchProductsBy__Query = async ({
   filters,
   sort,
+  pagination,
 }: {
   filters?: FilterOptionsType[];
   sort?: SortOptionsType[];
+  pagination?: PaginationType;
 }) => {
   let queryString = "";
   filters?.map(item => {
@@ -13,17 +15,31 @@ export const fetchProductsBy__Query = async ({
     item.key === "category"
       ? (queryString = `/category/${item.value}`)
       : (queryString = "/search?q" + "=" + item.value?.split(" ").join("-"));
-    if (sort?.length) {
-      sort?.map(item => {
-        queryString += `&sortBy=${item.sortBy}&order=${item.order}`;
-      });
-    }
   });
+  //for adding sort options
+  if (sort?.length) {
+    sort?.map(item => {
+      queryString += `sortBy=${item.sortBy}&order=${item.order}&`;
+    });
+  }
+  //for pagination
+  for (const key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+  }
+
   console.log(queryString);
   const response: AxiosResponse = await axios.get(
-    `https://dummyjson.com/products${queryString}`,
+    `https://dummyjson.com/products?${queryString}`,
   );
-  return response.data.products;
+  console.log(response.data.total);
+  const data: {
+    products: ProductType[];
+    totalProducts: number;
+  } = {
+    products: response.data.products,
+    totalProducts: response.data.total,
+  };
+  return data;
 };
 
 //todo: remove all un necessary console logs

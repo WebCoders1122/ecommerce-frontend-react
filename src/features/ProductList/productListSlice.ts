@@ -8,6 +8,7 @@ export interface ProductSliceStateType {
   error: string;
   brands: CategoryType[];
   categories: CategoryType[];
+  totalProducts: number;
 }
 
 const initialState: ProductSliceStateType = {
@@ -228,6 +229,7 @@ const initialState: ProductSliceStateType = {
       checked: false,
     },
   ],
+  totalProducts: 0,
 };
 
 export const fetchProductsByQuery = createAsyncThunk(
@@ -235,13 +237,19 @@ export const fetchProductsByQuery = createAsyncThunk(
   async ({
     filters,
     sort,
+    pagination,
   }: {
     filters?: FilterOptionsType[];
     sort?: SortOptionsType[];
+    pagination?: PaginationType;
   }) => {
-    const response: ProductType[] = await fetchProductsBy__Query({
+    const response: {
+      products: ProductType[];
+      totalProducts: number;
+    } = await fetchProductsBy__Query({
       filters,
       sort,
+      pagination,
     });
     // The value we return becomes the `fulfilled` action payload
     return response;
@@ -293,14 +301,20 @@ export const ProductSlice: any = createAppSlice({
       })
       .addCase(
         fetchProductsByQuery.fulfilled,
-        (state, action: PayloadAction<ProductType[]>) => {
+        (
+          state,
+          action: PayloadAction<{
+            products: ProductType[];
+            totalProducts: number;
+          }>,
+        ) => {
           state.leading = false;
 
           //finding unique products
-          state.products = action.payload.filter(
+          state.products = action.payload.products.filter(
             product => product.brand !== undefined,
           );
-
+          state.totalProducts = action.payload.totalProducts;
           state.error = "";
         },
       )
@@ -315,6 +329,7 @@ export const ProductSlice: any = createAppSlice({
     selectLeading: products => products.leading,
     selectBrands: products => products.brands,
     selectCategories: products => products.categories,
+    selectTotalProducts: products => products.totalProducts,
   },
 });
 
@@ -328,6 +343,7 @@ export const {
   selectLeading,
   selectBrands,
   selectCategories,
+  selectTotalProducts,
 } = ProductSlice.selectors;
 
 //exporting reducer
