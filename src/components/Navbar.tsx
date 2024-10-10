@@ -6,14 +6,14 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-} from "@headlessui/react"
+} from "@headlessui/react";
 import {
   Bars3Icon,
   ShoppingCartIcon,
   XMarkIcon,
-} from "@heroicons/react/24/outline"
-import { ReactNode } from "react"
-import { Link } from "react-router-dom"
+} from "@heroicons/react/24/outline";
+import { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 // links for navigation menu
 const navigation = [
@@ -21,10 +21,10 @@ const navigation = [
   { name: "Login", href: "/login", current: false },
   { name: "SignUp", href: "/signup", current: false },
   { name: "Calendar", href: "#", current: false },
-]
+];
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ")
+  return classes.filter(Boolean).join(" ");
 }
 
 const Navbar = ({ children }: { children?: ReactNode }) => {
@@ -62,9 +62,9 @@ const Navbar = ({ children }: { children?: ReactNode }) => {
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {navigation.map(item => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current
@@ -74,7 +74,7 @@ const Navbar = ({ children }: { children?: ReactNode }) => {
                     )}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -126,12 +126,12 @@ const Navbar = ({ children }: { children?: ReactNode }) => {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to="/login"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Sign out
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
@@ -161,8 +161,8 @@ const Navbar = ({ children }: { children?: ReactNode }) => {
       </DisclosurePanel>
       {children}
     </Disclosure>
-  )
-}
-export default Navbar
+  );
+};
+export default Navbar;
 
 // add animations to categories and filters

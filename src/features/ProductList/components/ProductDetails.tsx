@@ -74,9 +74,7 @@ const ProductDetails = (props: Props) => {
   //to get dynamic id
   const params = useParams();
   const id: number = Number(params.id);
-  console.log(params);
   const product: ProductType = useSelector(selectProduct);
-  console.log(product);
   //to fetch product data
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {

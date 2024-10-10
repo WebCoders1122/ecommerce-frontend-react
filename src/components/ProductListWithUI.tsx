@@ -63,7 +63,6 @@ const ProductListWithUI = () => {
   const categories: CategoryType[] = useSelector(selectCategories);
   //dispatch
   // todo: remove
-  console.log(brands);
   const dispatch: AppDispatch = useDispatch();
   const filters: {
     id: string;
@@ -97,7 +96,6 @@ const ProductListWithUI = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   // to handle sort options
   const handleChangeFilter = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log("filter");
     // todo:uncomment the code for server-side multi values search
     let newFilterOptions: FilterOptionsType[] = [];
     if (!e.target.checked) {
@@ -123,7 +121,6 @@ const ProductListWithUI = () => {
     e: React.MouseEvent<HTMLParagraphElement, MouseEvent>,
     option: SortType,
   ): void => {
-    console.log("sort;");
     let newSortOptions = { _sort: option.query, order: option.order };
     setSortQuery(newSortOptions);
     setPage(1);
@@ -157,7 +154,6 @@ const ProductListWithUI = () => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoriesAsync());
   }, []);
-  // console.log("effect", page, filterOptions, sortQuery);
 
   return (
     <div className="bg-white">
