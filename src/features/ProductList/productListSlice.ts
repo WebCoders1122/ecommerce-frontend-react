@@ -3,6 +3,7 @@ import { createAppSlice } from "../../app/createAppSlice";
 import {
   fetchBrands,
   fetchCategories,
+  fetchProductById,
   fetchProductsBy__Query,
 } from "./productListAPI";
 
@@ -13,6 +14,7 @@ export interface ProductSliceStateType {
   brands: CategoryType[];
   categories: CategoryType[];
   totalProducts: number;
+  product: ProductType;
 }
 
 const initialState: ProductSliceStateType = {
@@ -22,6 +24,43 @@ const initialState: ProductSliceStateType = {
   brands: [],
   categories: [],
   totalProducts: 0,
+  product: {
+    id: 0,
+    title: "",
+    description: "",
+    category: "",
+    price: 0,
+    discountPercentage: 0,
+    rating: 0,
+    stock: 0,
+    tags: [""],
+    brand: "",
+    sku: "",
+    weight: 0,
+    dimensions: { width: 0, height: 0, depth: 0 },
+    warrantyInformation: "",
+    shippingInformation: "",
+    availabilityStatus: "",
+    reviews: [
+      {
+        rating: 0,
+        comment: "",
+        date: "",
+        reviewerName: "",
+        reviewerEmail: "",
+      },
+    ],
+    returnPolicy: "",
+    minimumOrderQuantity: 0,
+    meta: {
+      createdAt: "",
+      updatedAt: "",
+      barcode: "",
+      qrCode: "",
+    },
+    images: [""],
+    thumbnail: "",
+  },
 };
 // to fetch products on any query
 export const fetchProductsByQuery = createAsyncThunk(
@@ -61,6 +100,15 @@ export const fetchCategoriesAsync = createAsyncThunk(
   "products/fetchCategories",
   async () => {
     const response: CategoryType[] = await fetchCategories();
+    // The value we return becomes the `fulfilled` action payload
+    return response;
+  },
+);
+//to fetch product by id
+export const fetchProductByIdAsync = createAsyncThunk(
+  "products/fetchProductById",
+  async (id: number) => {
+    const response: ProductType = await fetchProductById(id);
     // The value we return becomes the `fulfilled` action payload
     return response;
   },
@@ -136,6 +184,9 @@ export const ProductSlice: any = createAppSlice({
       })
       .addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
         state.categories = action.payload;
+      })
+      .addCase(fetchProductByIdAsync.fulfilled, (state, action) => {
+        state.product = action.payload;
       });
   },
   // You can define your selectors here. These selectors receive the slice
@@ -145,6 +196,7 @@ export const ProductSlice: any = createAppSlice({
     selectBrands: products => products.brands,
     selectCategories: products => products.categories,
     selectTotalProducts: products => products.totalProducts,
+    selectProduct: products => products.product,
   },
 });
 
@@ -159,6 +211,7 @@ export const {
   selectBrands,
   selectCategories,
   selectTotalProducts,
+  selectProduct,
 } = ProductSlice.selectors;
 
 //exporting reducer

@@ -1,12 +1,16 @@
 import { Radio, RadioGroup } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchProductByIdAsync, selectProduct } from "../productListSlice";
+import { AppDispatch } from "../../../app/store";
 
 type Props = {};
 
 //dummy details of product with review
 //todo: need to adjust type as per original data
-const product = {
+const productss = {
   name: "Basic Tee 6-Pack",
   price: "$192",
   href: "#",
@@ -65,8 +69,19 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 const ProductDetails = (props: Props) => {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+  const [selectedColor, setSelectedColor] = useState(productss.colors[0]);
+  const [selectedSize, setSelectedSize] = useState(productss.sizes[2]);
+  //to get dynamic id
+  const params = useParams();
+  const id: number = Number(params.id);
+  console.log(params);
+  const product: ProductType = useSelector(selectProduct);
+  console.log(product);
+  //to fetch product data
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchProductByIdAsync(id));
+  }, []);
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -78,15 +93,33 @@ const ProductDetails = (props: Props) => {
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-              {product.name}
+              {product.title}
             </h1>
           </div>
 
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">
-              {product.price}
+            <div className="">
+              {product.discountPercentage > 0 ? (
+                <p className="text-sm font-medium text-gray-900">
+                  <span className="text-3xl tracking-tight">
+                    $
+                    {product.price -
+                      Math.round(
+                        product.price * (product.discountPercentage / 100),
+                      )}
+                  </span>
+                  <span className="ml-3 relative bottom-1 border border-green-500 rounded text-green-500 p-0.5 px-1.5">
+                    {Math.floor(product.discountPercentage)}% off
+                  </span>
+                </p>
+              ) : null}
+            </div>
+            <p
+              className={`${product.discountPercentage > 0 ? "text-2xl text-gray-400 line-through" : "text-3xl text-gray-900"} tracking-tight`}
+            >
+              ${product.price}
             </p>
 
             {/* Reviews */}
@@ -99,7 +132,7 @@ const ProductDetails = (props: Props) => {
                       key={rating}
                       aria-hidden="true"
                       className={classNames(
-                        reviews.average > rating
+                        product.reviews[0].rating > rating
                           ? "text-gray-900"
                           : "text-gray-200",
                         "h-5 w-5 flex-shrink-0",
@@ -107,12 +140,14 @@ const ProductDetails = (props: Props) => {
                     />
                   ))}
                 </div>
-                <p className="sr-only">{reviews.average} out of 5 stars</p>
+                <p className="sr-only">
+                  {product.reviews[0].rating} out of 5 stars
+                </p>
                 <a
-                  href={reviews.href}
+                  href={"#"}
                   className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  {reviews.totalCount} reviews
+                  {product.reviews.length} reviews
                 </a>
               </div>
             </div>
@@ -128,7 +163,7 @@ const ProductDetails = (props: Props) => {
                     onChange={setSelectedColor}
                     className="flex items-center space-x-3"
                   >
-                    {product.colors.map(color => (
+                    {productss.colors.map(color => (
                       <Radio
                         key={color.name}
                         value={color}
@@ -169,7 +204,7 @@ const ProductDetails = (props: Props) => {
                     onChange={setSelectedSize}
                     className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
                   >
-                    {product.sizes.map(size => (
+                    {productss.sizes.map(size => (
                       <Radio
                         key={size.name}
                         value={size}
@@ -238,7 +273,7 @@ const ProductDetails = (props: Props) => {
 
               <div className="mt-4">
                 <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                  {product.highlights.map(highlight => (
+                  {productss.highlights.map(highlight => (
                     <li key={highlight} className="text-gray-400">
                       <span className="text-gray-600">{highlight}</span>
                     </li>
@@ -251,7 +286,7 @@ const ProductDetails = (props: Props) => {
               <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
               <div className="mt-4 space-y-6">
-                <p className="text-sm text-gray-600">{product.details}</p>
+                <p className="text-sm text-gray-600">{product.description}</p>
               </div>
             </div>
           </div>
@@ -263,14 +298,14 @@ const ProductDetails = (props: Props) => {
 
 export default ProductDetails;
 
-const PageNav = ({ product }) => {
+const PageNav = ({ product }: { product: ProductType }) => {
   return (
     <nav aria-label="Breadcrumb">
       <ol
         role="list"
         className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
       >
-        {product.breadcrumbs.map(breadcrumb => (
+        {productss.breadcrumbs.map(breadcrumb => (
           <li key={breadcrumb.id}>
             <div className="flex items-center">
               <a
@@ -294,11 +329,11 @@ const PageNav = ({ product }) => {
         ))}
         <li className="text-sm">
           <a
-            href={product.href}
+            href={"#"}
             aria-current="page"
             className="font-medium text-gray-500 hover:text-gray-600"
           >
-            {product.name}
+            {product.title}
           </a>
         </li>
       </ol>
@@ -306,36 +341,36 @@ const PageNav = ({ product }) => {
   );
 };
 
-const ImageGallery = ({ product }) => {
+const ImageGallery = ({ product }: { product: ProductType }) => {
   return (
     <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
       <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
         <img
-          alt={product.images[0].alt}
-          src={product.images[0].src}
+          alt={product.title}
+          src={product.images[0]}
           className="h-full w-full object-cover object-center"
         />
       </div>
       <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
         <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
           <img
-            alt={product.images[1].alt}
-            src={product.images[1].src}
+            alt={product.title}
+            src={product.images[0]}
             className="h-full w-full object-cover object-center"
           />
         </div>
         <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
           <img
-            alt={product.images[2].alt}
-            src={product.images[2].src}
+            alt={product.title}
+            src={product.images[0]}
             className="h-full w-full object-cover object-center"
           />
         </div>
       </div>
       <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
         <img
-          alt={product.images[3].alt}
-          src={product.images[3].src}
+          alt={product.title}
+          src={product.images[0]}
           className="h-full w-full object-cover object-center"
         />
       </div>

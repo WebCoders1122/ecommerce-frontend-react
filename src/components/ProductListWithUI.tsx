@@ -549,7 +549,7 @@ const ProductList = ({ products }: { products: ProductType[] }) => {
                 <div>
                   <h3 className="text-sm text-gray-700">
                     {/* todo: change this # with actual link */}
-                    <Link to="/product">
+                    <Link to={`product/${product.id}`}>
                       <span aria-hidden="true" className="absolute inset-0" />
                       {product.title}
                     </Link>

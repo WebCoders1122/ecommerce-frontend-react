@@ -70,4 +70,19 @@ export const fetchCategories = (): Promise<CategoryType[]> => {
     resolve(data);
   });
 };
+
+// for fecthing product by id
+export const fetchProductById = (id: number): Promise<ProductType> => {
+  return new Promise(async (resolve, reject) => {
+    const response: AxiosResponse = await axios.get(
+      `http://localhost:8080/products/${id}`,
+    );
+    const data: ProductType = response.data;
+    if (data) {
+      resolve(data);
+    } else {
+      reject("Product not found");
+    }
+  });
+};
 //todo: remove all un necessary console logs
