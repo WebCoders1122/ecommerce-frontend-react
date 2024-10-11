@@ -64,3 +64,12 @@ type PaginationType = {
   [_page: string]: number;
   [_per_page: string]: number;
 };
+
+//cart feature
+type ProductToAddType = {
+  title: string;
+  price: number;
+  quantity: number;
+  image: string;
+  description: string;
+};

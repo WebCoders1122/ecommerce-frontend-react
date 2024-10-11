@@ -1,10 +1,11 @@
 import { Radio, RadioGroup } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchProductByIdAsync, selectProduct } from "../productListSlice";
 import { AppDispatch } from "../../../app/store";
+import { addToCartAsync } from "../../cart/cartSlice";
 
 type Props = {};
 
@@ -80,6 +81,22 @@ const ProductDetails = (props: Props) => {
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id));
   }, []);
+  //function for adding products to cart
+  const handleCart = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    item: ProductType,
+  ) => {
+    e.preventDefault();
+    const productToAdd: ProductToAddType = {
+      title: item.title,
+      price: item.price,
+      quantity: 1,
+      image: item.images[0],
+      description: item.description,
+    };
+    dispatch(addToCartAsync(productToAdd));
+  };
+
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -249,6 +266,7 @@ const ProductDetails = (props: Props) => {
 
               <button
                 type="submit"
+                onClick={e => handleCart(e, product)}
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Add to Cart

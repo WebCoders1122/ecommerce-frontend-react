@@ -1,7 +1,11 @@
+import axios from "axios";
+
 // A mock function to mimic making an async request for data
-export const fetchCount = (amount = 1) => {
-  return new Promise<{ data: number }>(resolve => {
-    const response: any = fetch("http://localhost:5173")
-    resolve(response.data)
-  })
-}
+export const addToCart = async (product: ProductToAddType) => {
+  const response = await axios.post(
+    "http://localhost:8080/cart",
+    JSON.stringify(product),
+  );
+  const data = response.data;
+  return data;
+};

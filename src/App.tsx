@@ -45,7 +45,7 @@ const router = createBrowserRouter(
         path="/product/:id"
         element={
           <Protect>
-            <CheckOutPage />
+            <ProductDetailsPage />
           </Protect>
         }
       />
