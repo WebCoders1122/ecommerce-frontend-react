@@ -5,7 +5,8 @@ import { Navigate } from "react-router-dom";
 
 const Protect = ({ children }: { children: JSX.Element }) => {
   const user = useSelector(selectLoggedInUser);
-  return <>{user ? children : <Navigate to="/login" />}</>;
+  console.log("protect");
+  return <>{user.id ? children : <Navigate to="/login" />}</>;
 };
 
 export default Protect;

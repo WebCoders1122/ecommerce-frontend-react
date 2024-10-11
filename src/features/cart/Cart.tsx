@@ -1,67 +1,40 @@
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { AppDispatch } from "../../app/store";
+import Heading from "../../components/PrimeComponents/Heading";
+import { selectLoggedInUser } from "../auth/authSlice";
 import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react"
-import { XMarkIcon } from "@heroicons/react/24/outline"
-import { Link } from "react-router-dom"
-import Heading from "../../components/PrimeComponents/Heading"
+  fetchCartProductsByUserIdAsync,
+  selectCartProducts,
+  updateProductQuantityAsync,
+} from "./cartSlice";
 
 const Cart = () => {
-  const [open, setOpen] = useState(true)
-  const products = [
-    {
-      id: 1,
-      name: "Earthen Bottle",
-      href: "#",
-      price: "$48",
-      imageSrc:
-        "https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-01.jpg",
-      imageAlt:
-        "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-      color: "earthen-brown",
-      quantity: 1, // Initialize quantity to 1
-    },
-    {
-      id: 2,
-      name: "Nomad Tumbler",
-      href: "#",
-      price: "$35",
-      imageSrc:
-        "https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-02.jpg",
-      imageAlt:
-        "Olive drab green insulated bottle with flared screw lid and flat top.",
-      color: "olive-drab",
-      quantity: 1, // Initialize quantity to 1
-    },
-    {
-      id: 3,
-      name: "Focus Paper Refill",
-      href: "#",
-      price: "$89",
-      imageSrc:
-        "https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-03.jpg",
-      imageAlt:
-        "Person using a pen to cross a task off a productivity paper card.",
-      color: "pale-yellow",
-      quantity: 1, // Initialize quantity to 1
-    },
-    {
-      id: 4,
-      name: "Machined Mechanical Pencil",
-      href: "#",
-      price: "$35",
-      imageSrc:
-        "https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-04.jpg",
-      imageAlt:
-        "Hand holding black machined steel mechanical pencil with brass tip and top.",
-      color: "dark-gray",
-      quantity: 1, // Initialize quantity to 1
-    },
-    // More products...
-  ]
+  const products = useSelector(selectCartProducts);
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector(selectLoggedInUser);
+  const totalPrice = +products
+    .reduce((acc, item) => acc + item.price * item.quantity, 0)
+    .toFixed(2);
+  const totalProducts = products.reduce((acc, item) => acc + item.quantity, 0);
+  // to update quantity
+  const handleQuantity = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    index: number,
+  ) => {
+    const newQuantity = Number(e.target.value);
+    const productToUpdate = products[index];
+    if (productToUpdate) {
+      const updatedProduct = { ...productToUpdate, quantity: newQuantity };
+      dispatch(updateProductQuantityAsync(updatedProduct));
+    }
+  };
+
+  useEffect(() => {
+    console.log("dispa");
+    dispatch(fetchCartProductsByUserIdAsync(user.id));
+  }, [dispatch]);
 
   return (
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-14">
@@ -70,12 +43,12 @@ const Cart = () => {
           <Heading className="m-5">Cart</Heading>
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
-              {products.map(product => (
-                <li key={product.id} className="flex py-6">
+              {products.map((product, index) => (
+                <li key={product?.id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
-                      alt={product.imageAlt}
-                      src={product.imageSrc}
+                      alt={product.title}
+                      src={product.image}
                       className="h-full w-full object-cover object-center"
                     />
                   </div>
@@ -84,16 +57,38 @@ const Cart = () => {
                     <div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <h3>
-                          <a href={product.href}>{product.name}</a>
+                          <Link to="#">{product.title}</Link>
                         </h3>
-                        <p className="ml-4">{product.price}</p>
+                        <p className="ml-4">${product.price}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500">
-                        {product.color}
+                        {/* todo: add color here instread of user */}
+                        {product.user}
                       </p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
-                      <p className="text-gray-500">Qty {product.quantity}</p>
+                      <div className="flex gap-2 items-baseline ">
+                        <label
+                          htmlFor="qty-select"
+                          className="block mb-2 text-sm font-medium text-gray-900"
+                        >
+                          Qty:
+                        </label>
+                        <select
+                          value={product.quantity}
+                          id="qty-select"
+                          onChange={e => handleQuantity(e, index)}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
+                          // dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+                        >
+                          {/* todo: add qty as per stock */}
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
+                      </div>
 
                       <div className="flex">
                         <button
@@ -108,14 +103,17 @@ const Cart = () => {
                 </li>
               ))}
             </ul>
-            Hea
           </div>
         </div>
 
-        <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+        <div className="border-t border-gray-200 px-4 py-6 sm:px-6 mt-6">
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Subtotal</p>
-            <p>$262.00</p>
+            <p>${totalPrice}</p>
+          </div>
+          <div className="flex justify-between text-base font-medium text-gray-900">
+            <p>Total Items</p>
+            <p>{totalProducts} Items</p>
           </div>
           <p className="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.
@@ -143,6 +141,6 @@ const Cart = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default Cart
+  );
+};
+export default Cart;

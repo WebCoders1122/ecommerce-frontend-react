@@ -67,9 +67,11 @@ type PaginationType = {
 
 //cart feature
 type ProductToAddType = {
+  id?: string;
   title: string;
   price: number;
   quantity: number;
   image: string;
   description: string;
+  user: string;
 };

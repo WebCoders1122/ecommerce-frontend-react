@@ -3,12 +3,12 @@ import { createAppSlice } from "../../app/createAppSlice";
 import { loginUser, registerUser } from "./authAPI";
 
 export interface AuthSliceState {
-  loggedInUser: string;
+  loggedInUser: { email: string; id: string };
   error: string;
 }
 
 const initialState: AuthSliceState = {
-  loggedInUser: "",
+  loggedInUser: { email: "", id: "" },
   error: "",
 };
 
@@ -41,7 +41,7 @@ export const authSlice = createAppSlice({
         state.loggedInUser = action.payload;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
-        state.loggedInUser = "";
+        state.loggedInUser = { email: "", id: "" };
         if (action.error.message) {
           state.error = action.error.message;
         }

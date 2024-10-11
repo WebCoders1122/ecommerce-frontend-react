@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { fetchProductByIdAsync, selectProduct } from "../productListSlice";
 import { AppDispatch } from "../../../app/store";
 import { addToCartAsync } from "../../cart/cartSlice";
+import { selectLoggedInUser } from "../../auth/authSlice";
 
 type Props = {};
 
@@ -81,18 +82,22 @@ const ProductDetails = (props: Props) => {
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id));
   }, []);
+  //user to add products in cart
+  const user = useSelector(selectLoggedInUser);
   //function for adding products to cart
   const handleCart = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     item: ProductType,
   ) => {
     e.preventDefault();
+    // todo: show toast when product added to cart successfully and vice versa
     const productToAdd: ProductToAddType = {
       title: item.title,
       price: item.price,
       quantity: 1,
       image: item.images[0],
       description: item.description,
+      user: user.id,
     };
     dispatch(addToCartAsync(productToAdd));
   };

@@ -9,3 +9,20 @@ export const addToCart = async (product: ProductToAddType) => {
   const data = response.data;
   return data;
 };
+//to fetch products by user id
+export const fetchCartProductsByUserId = async (userId: string) => {
+  const response = await axios.get("http://localhost:8080/cart?user=" + userId);
+  const data = response.data;
+  return data;
+};
+//to update product
+export const updateProductQuantity = async (update: ProductToAddType) => {
+  console.log(update);
+  const response = await fetch("http://localhost:8080/cart/" + update.id, {
+    method: "PATCH",
+    body: JSON.stringify(update),
+    headers: { "content-type": "application/json" },
+  });
+  const data = await response.json();
+  return data;
+};

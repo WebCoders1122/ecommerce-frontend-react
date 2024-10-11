@@ -5,12 +5,16 @@ export const registerUser = (registerData: {
   email: string;
   password: string;
 }) => {
-  return new Promise<string>(async (resolve, reject) => {
+  return new Promise<{ email: string; id: string }>(async (resolve, reject) => {
     const response: AxiosResponse = await axios.post(
       "http://localhost:8080/users",
       JSON.stringify(registerData),
     );
-    resolve(response.data.email);
+    const user: { email: string; id: string } = {
+      email: response.data.email,
+      id: response.data.id,
+    };
+    resolve(user);
   });
 };
 
@@ -27,6 +31,7 @@ export const loginUser = async (loginData: {
   } else if (response.data[0].password !== loginData.password) {
     throw new Error("Incorrect password");
   } else {
-    return response.data[0].email;
+    const user = { email: response.data[0].email, id: response.data[0].id };
+    return user;
   }
 };
