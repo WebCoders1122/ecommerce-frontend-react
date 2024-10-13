@@ -88,3 +88,15 @@ type AddressType = {
   region: string;
   postalCode: number;
 };
+
+//order feat
+type OrderType = {
+  id?: string;
+  userId: string;
+  products: ProductToAddType[];
+  totalPrice: number;
+  totalProducts: number;
+  address: AddressType;
+  paymentMethod: string;
+  status: string;
+};

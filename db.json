@@ -1,4 +1,374 @@
 {
+  "orders": [
+    {
+      "id": "7eff",
+      "userId": "7b81",
+      "products": [
+        {
+          "id": "7125",
+          "title": "Eyeshadow Palette with Mirror",
+          "price": 19.99,
+          "quantity": 5,
+          "image": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
+          "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
+          "user": "7b81"
+        }
+      ],
+      "totalPrice": 99.95,
+      "totalProducts": 5,
+      "address": {
+        "firstName": "Habib ur Rehman",
+        "lastName": "Shakir",
+        "email": "wagambo.com@gmail.com",
+        "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+        "city": "Mianwali",
+        "region": "Punjab",
+        "postalCode": "42030"
+      },
+      "paymentMethod": "COD",
+      "status": "Pending"
+    }
+  ],
+  "brands": [
+    {
+      "value": "Essence",
+      "label": "Essence",
+      "checked": false,
+      "id": "8e0d"
+    },
+    {
+      "value": "Glamour Beauty",
+      "label": "Glamour Beauty",
+      "checked": false,
+      "id": "d65b"
+    },
+    {
+      "value": "Velvet Touch",
+      "label": "Velvet Touch",
+      "checked": false,
+      "id": "49a5"
+    },
+    {
+      "value": "Chic Cosmetics",
+      "label": "Chic Cosmetics",
+      "checked": false,
+      "id": "2d47"
+    },
+    {
+      "value": "Nail Couture",
+      "label": "Nail Couture",
+      "checked": false,
+      "id": "d939"
+    },
+    {
+      "value": "Calvin Klein",
+      "label": "Calvin Klein",
+      "checked": false,
+      "id": "a17a"
+    },
+    {
+      "value": "Chanel",
+      "label": "Chanel",
+      "checked": false,
+      "id": "10bb"
+    },
+    {
+      "value": "Dior",
+      "label": "Dior",
+      "checked": false,
+      "id": "4551"
+    },
+    {
+      "value": "Dolce & Gabbana",
+      "label": "Dolce & Gabbana",
+      "checked": false,
+      "id": "f1b9"
+    },
+    {
+      "value": "Gucci",
+      "label": "Gucci",
+      "checked": false,
+      "id": "dca9"
+    },
+    {
+      "value": "Annibale Colombo",
+      "label": "Annibale Colombo",
+      "checked": false,
+      "id": "9efc"
+    },
+    {
+      "value": "Furniture Co.",
+      "label": "Furniture Co.",
+      "checked": false,
+      "id": "c071"
+    },
+    {
+      "value": "Knoll",
+      "label": "Knoll",
+      "checked": false,
+      "id": "5f7e"
+    },
+    {
+      "value": "Bath Trends",
+      "label": "Bath Trends",
+      "checked": false,
+      "id": "217a"
+    },
+    {
+      "value": "Apple",
+      "label": "Apple",
+      "checked": false,
+      "id": "7721"
+    },
+    {
+      "value": "Asus",
+      "label": "Asus",
+      "checked": false,
+      "id": "7729"
+    },
+    {
+      "value": "Huawei",
+      "label": "Huawei",
+      "checked": false,
+      "id": "11d0"
+    },
+    {
+      "value": "Lenovo",
+      "label": "Lenovo",
+      "checked": false,
+      "id": "e818"
+    },
+    {
+      "value": "Dell",
+      "label": "Dell",
+      "checked": false,
+      "id": "6a83"
+    },
+    {
+      "value": "Fashion Trends",
+      "label": "Fashion Trends",
+      "checked": false,
+      "id": "637a"
+    },
+    {
+      "value": "Gigabyte",
+      "label": "Gigabyte",
+      "checked": false,
+      "id": "b7bb"
+    },
+    {
+      "value": "Classic Wear",
+      "label": "Classic Wear",
+      "checked": false,
+      "id": "04cd"
+    },
+    {
+      "value": "Casual Comfort",
+      "label": "Casual Comfort",
+      "checked": false,
+      "id": "095f"
+    },
+    {
+      "value": "Urban Chic",
+      "label": "Urban Chic",
+      "checked": false,
+      "id": "029a"
+    },
+    {
+      "value": "Nike",
+      "label": "Nike",
+      "checked": false,
+      "id": "7a50"
+    },
+    {
+      "value": "Puma",
+      "label": "Puma",
+      "checked": false,
+      "id": "4c87"
+    },
+    {
+      "value": "Off White",
+      "label": "Off White",
+      "checked": false,
+      "id": "8c68"
+    },
+    {
+      "value": "Fashion Timepieces",
+      "label": "Fashion Timepieces",
+      "checked": false,
+      "id": "1208"
+    },
+    {
+      "value": "Longines",
+      "label": "Longines",
+      "checked": false,
+      "id": "2f38"
+    },
+    {
+      "value": "Rolex",
+      "label": "Rolex",
+      "checked": false,
+      "id": "d183"
+    },
+    {
+      "value": "Amazon",
+      "label": "Amazon",
+      "checked": false,
+      "id": "7641"
+    }
+  ],
+  "category": [
+    {
+      "value": "Beauty",
+      "label": "Beauty",
+      "checked": false,
+      "id": "d166"
+    },
+    {
+      "value": "Fragrances",
+      "label": "Fragrances",
+      "checked": false,
+      "id": "f019"
+    },
+    {
+      "value": "Furniture",
+      "label": "Furniture",
+      "checked": false,
+      "id": "cc94"
+    },
+    {
+      "value": "Groceries",
+      "label": "Groceries",
+      "checked": false,
+      "id": "0419"
+    },
+    {
+      "value": "Home decoration",
+      "label": "Home decoration",
+      "checked": false,
+      "id": "e1b8"
+    },
+    {
+      "value": "Kitchen accessories",
+      "label": "Kitchen accessories",
+      "checked": false,
+      "id": "9c40"
+    },
+    {
+      "value": "Laptops",
+      "label": "Laptops",
+      "checked": false,
+      "id": "932b"
+    },
+    {
+      "value": "Mens shirts",
+      "label": "Mens shirts",
+      "checked": false,
+      "id": "103c"
+    },
+    {
+      "value": "Mens shoes",
+      "label": "Mens shoes",
+      "checked": false,
+      "id": "8f88"
+    },
+    {
+      "value": "Mens watches",
+      "label": "Mens watches",
+      "checked": false,
+      "id": "9df3"
+    },
+    {
+      "value": "Mobile accessories",
+      "label": "Mobile accessories",
+      "checked": false,
+      "id": "1679"
+    }
+  ],
+  "users": [
+    {
+      "id": "7b81",
+      "email": "webcoders1122@gmail.com",
+      "password": "habib123",
+      "addresses": [
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "sdfe",
+          "lastName": "dd",
+          "email": "dastaaneislam@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "s",
+          "postalCode": "2342"
+        }
+      ]
+    },
+    {
+      "id": "d36a",
+      "email": "user01@gmail.com",
+      "password": "habib123"
+    },
+    {
+      "id": "07c1",
+      "email": "user02@gmail.com",
+      "password": "habib123"
+    }
+  ],
+  "cart": [
+    {
+      "id": "7125",
+      "title": "Eyeshadow Palette with Mirror",
+      "price": 19.99,
+      "quantity": 5,
+      "image": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
+      "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
+      "user": "7b81"
+    }
+  ],
   "products": [
     {
       "id": "1",
@@ -6007,346 +6377,6 @@
         "https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Airpods/3.png"
       ],
       "thumbnail": "https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Airpods/thumbnail.png"
-    }
-  ],
-  "brands": [
-    {
-      "value": "Essence",
-      "label": "Essence",
-      "checked": false,
-      "id": "8e0d"
-    },
-    {
-      "value": "Glamour Beauty",
-      "label": "Glamour Beauty",
-      "checked": false,
-      "id": "d65b"
-    },
-    {
-      "value": "Velvet Touch",
-      "label": "Velvet Touch",
-      "checked": false,
-      "id": "49a5"
-    },
-    {
-      "value": "Chic Cosmetics",
-      "label": "Chic Cosmetics",
-      "checked": false,
-      "id": "2d47"
-    },
-    {
-      "value": "Nail Couture",
-      "label": "Nail Couture",
-      "checked": false,
-      "id": "d939"
-    },
-    {
-      "value": "Calvin Klein",
-      "label": "Calvin Klein",
-      "checked": false,
-      "id": "a17a"
-    },
-    {
-      "value": "Chanel",
-      "label": "Chanel",
-      "checked": false,
-      "id": "10bb"
-    },
-    {
-      "value": "Dior",
-      "label": "Dior",
-      "checked": false,
-      "id": "4551"
-    },
-    {
-      "value": "Dolce & Gabbana",
-      "label": "Dolce & Gabbana",
-      "checked": false,
-      "id": "f1b9"
-    },
-    {
-      "value": "Gucci",
-      "label": "Gucci",
-      "checked": false,
-      "id": "dca9"
-    },
-    {
-      "value": "Annibale Colombo",
-      "label": "Annibale Colombo",
-      "checked": false,
-      "id": "9efc"
-    },
-    {
-      "value": "Furniture Co.",
-      "label": "Furniture Co.",
-      "checked": false,
-      "id": "c071"
-    },
-    {
-      "value": "Knoll",
-      "label": "Knoll",
-      "checked": false,
-      "id": "5f7e"
-    },
-    {
-      "value": "Bath Trends",
-      "label": "Bath Trends",
-      "checked": false,
-      "id": "217a"
-    },
-    {
-      "value": "Apple",
-      "label": "Apple",
-      "checked": false,
-      "id": "7721"
-    },
-    {
-      "value": "Asus",
-      "label": "Asus",
-      "checked": false,
-      "id": "7729"
-    },
-    {
-      "value": "Huawei",
-      "label": "Huawei",
-      "checked": false,
-      "id": "11d0"
-    },
-    {
-      "value": "Lenovo",
-      "label": "Lenovo",
-      "checked": false,
-      "id": "e818"
-    },
-    {
-      "value": "Dell",
-      "label": "Dell",
-      "checked": false,
-      "id": "6a83"
-    },
-    {
-      "value": "Fashion Trends",
-      "label": "Fashion Trends",
-      "checked": false,
-      "id": "637a"
-    },
-    {
-      "value": "Gigabyte",
-      "label": "Gigabyte",
-      "checked": false,
-      "id": "b7bb"
-    },
-    {
-      "value": "Classic Wear",
-      "label": "Classic Wear",
-      "checked": false,
-      "id": "04cd"
-    },
-    {
-      "value": "Casual Comfort",
-      "label": "Casual Comfort",
-      "checked": false,
-      "id": "095f"
-    },
-    {
-      "value": "Urban Chic",
-      "label": "Urban Chic",
-      "checked": false,
-      "id": "029a"
-    },
-    {
-      "value": "Nike",
-      "label": "Nike",
-      "checked": false,
-      "id": "7a50"
-    },
-    {
-      "value": "Puma",
-      "label": "Puma",
-      "checked": false,
-      "id": "4c87"
-    },
-    {
-      "value": "Off White",
-      "label": "Off White",
-      "checked": false,
-      "id": "8c68"
-    },
-    {
-      "value": "Fashion Timepieces",
-      "label": "Fashion Timepieces",
-      "checked": false,
-      "id": "1208"
-    },
-    {
-      "value": "Longines",
-      "label": "Longines",
-      "checked": false,
-      "id": "2f38"
-    },
-    {
-      "value": "Rolex",
-      "label": "Rolex",
-      "checked": false,
-      "id": "d183"
-    },
-    {
-      "value": "Amazon",
-      "label": "Amazon",
-      "checked": false,
-      "id": "7641"
-    }
-  ],
-  "category": [
-    {
-      "value": "Beauty",
-      "label": "Beauty",
-      "checked": false,
-      "id": "d166"
-    },
-    {
-      "value": "Fragrances",
-      "label": "Fragrances",
-      "checked": false,
-      "id": "f019"
-    },
-    {
-      "value": "Furniture",
-      "label": "Furniture",
-      "checked": false,
-      "id": "cc94"
-    },
-    {
-      "value": "Groceries",
-      "label": "Groceries",
-      "checked": false,
-      "id": "0419"
-    },
-    {
-      "value": "Home decoration",
-      "label": "Home decoration",
-      "checked": false,
-      "id": "e1b8"
-    },
-    {
-      "value": "Kitchen accessories",
-      "label": "Kitchen accessories",
-      "checked": false,
-      "id": "9c40"
-    },
-    {
-      "value": "Laptops",
-      "label": "Laptops",
-      "checked": false,
-      "id": "932b"
-    },
-    {
-      "value": "Mens shirts",
-      "label": "Mens shirts",
-      "checked": false,
-      "id": "103c"
-    },
-    {
-      "value": "Mens shoes",
-      "label": "Mens shoes",
-      "checked": false,
-      "id": "8f88"
-    },
-    {
-      "value": "Mens watches",
-      "label": "Mens watches",
-      "checked": false,
-      "id": "9df3"
-    },
-    {
-      "value": "Mobile accessories",
-      "label": "Mobile accessories",
-      "checked": false,
-      "id": "1679"
-    }
-  ],
-  "users": [
-    {
-      "id": "7b81",
-      "email": "webcoders1122@gmail.com",
-      "password": "habib123",
-      "addresses": [
-        {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "sdfe",
-          "lastName": "dd",
-          "email": "dastaaneislam@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "s",
-          "postalCode": "2342"
-        }
-      ]
-    },
-    {
-      "id": "d36a",
-      "email": "user01@gmail.com",
-      "password": "habib123"
-    },
-    {
-      "id": "07c1",
-      "email": "user02@gmail.com",
-      "password": "habib123"
-    }
-  ],
-  "cart": [
-    {
-      "id": "7125",
-      "title": "Eyeshadow Palette with Mirror",
-      "price": 19.99,
-      "quantity": 5,
-      "image": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-      "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
-      "user": "7b81"
     }
   ],
   "total": 100,
