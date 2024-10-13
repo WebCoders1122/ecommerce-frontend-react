@@ -5,7 +5,6 @@ import { Navigate } from "react-router-dom";
 
 const Protect = ({ children }: { children: JSX.Element }) => {
   const user = useSelector(selectLoggedInUser);
-  console.log("protect");
   return <>{user.id ? children : <Navigate to="/login" />}</>;
 };
 

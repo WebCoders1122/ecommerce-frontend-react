@@ -28,7 +28,6 @@ export const updateProductQuantity = async (update: ProductToAddType) => {
 };
 //to remove product
 export const removeFromCart = async (product: ProductToAddType) => {
-  console.log("api remove");
   const response = await fetch("http://localhost:8080/cart/" + product.id, {
     method: "DELETE",
     headers: { "content-type": "application/json" },

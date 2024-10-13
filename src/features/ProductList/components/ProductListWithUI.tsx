@@ -31,9 +31,9 @@ import {
   selectBrands,
   selectCategories,
   selectTotalProducts,
-} from "../features/ProductList/productListSlice";
-import { AppDispatch } from "../app/store";
-import { ITEMS_PER_PAGE } from "../app/constants";
+} from "../productListSlice";
+import { AppDispatch } from "../../../app/store";
+import { ITEMS_PER_PAGE } from "../../../app/constants";
 import { Link } from "react-router-dom";
 
 // options and fitlers of sidebars

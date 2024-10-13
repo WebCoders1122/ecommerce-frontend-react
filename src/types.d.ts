@@ -75,3 +75,16 @@ type ProductToAddType = {
   description: string;
   user: string;
 };
+
+//checkout page
+type AddressType = {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  country: string;
+  streetAddress: string;
+  city: string;
+  region: string;
+  postalCode: number;
+};

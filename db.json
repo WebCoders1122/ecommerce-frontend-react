@@ -6269,7 +6269,63 @@
     {
       "id": "7b81",
       "email": "webcoders1122@gmail.com",
-      "password": "habib123"
+      "password": "habib123",
+      "addresses": [
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "Habib ur Rehman",
+          "lastName": "Shakir",
+          "email": "wagambo.com@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "Punjab",
+          "postalCode": "42030"
+        },
+        {
+          "firstName": "sdfe",
+          "lastName": "dd",
+          "email": "dastaaneislam@gmail.com",
+          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+          "city": "Mianwali",
+          "region": "s",
+          "postalCode": "2342"
+        }
+      ]
     },
     {
       "id": "d36a",
@@ -6284,37 +6340,10 @@
   ],
   "cart": [
     {
-      "id": "784c",
-      "title": "Powder Canister",
-      "price": 14.99,
-      "quantity": 1,
-      "image": "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png",
-      "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
-      "user": "7b81"
-    },
-    {
-      "id": "e2e2",
-      "title": "Essence Mascara Lash Princess",
-      "price": 9.99,
-      "quantity": 1,
-      "image": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
-      "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-      "user": "7b81"
-    },
-    {
-      "id": "16be",
-      "title": "Chanel Coco Noir Eau De",
-      "price": 129.99,
-      "quantity": 1,
-      "image": "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/1.png",
-      "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
-      "user": "7b81"
-    },
-    {
-      "id": "f269",
+      "id": "7125",
       "title": "Eyeshadow Palette with Mirror",
       "price": 19.99,
-      "quantity": 1,
+      "quantity": 5,
       "image": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
       "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
       "user": "7b81"

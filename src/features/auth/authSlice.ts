@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
-import { loginUser, registerUser } from "./authAPI";
+import { addNewAddress, loginUser, registerUser } from "./authAPI";
 
 export interface AuthSliceState {
-  loggedInUser: { email: string; id: string };
+  loggedInUser: { email: string; id: string; addresses: AddressType[] };
   error: string;
 }
 
 const initialState: AuthSliceState = {
-  loggedInUser: { email: "", id: "" },
+  loggedInUser: { email: "", id: "", addresses: [] },
   error: "",
 };
 
@@ -28,6 +28,15 @@ export const loginUserAsync = createAsyncThunk(
   },
 );
 
+// to add new address to current user
+export const addNewAddressAsync = createAsyncThunk(
+  "auth/addNewAddress",
+  async ({ address, userId }: { address: AddressType; userId: string }) => {
+    const response = await addNewAddress({ address, userId });
+    return response;
+  },
+);
+
 export const authSlice = createAppSlice({
   name: "auth",
   initialState,
@@ -41,10 +50,13 @@ export const authSlice = createAppSlice({
         state.loggedInUser = action.payload;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
-        state.loggedInUser = { email: "", id: "" };
+        state.loggedInUser = { email: "", id: "", addresses: [] };
         if (action.error.message) {
           state.error = action.error.message;
         }
+      })
+      .addCase(addNewAddressAsync.fulfilled, (state, action) => {
+        state.loggedInUser = action.payload;
       });
   },
   selectors: {

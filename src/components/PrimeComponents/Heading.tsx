@@ -1,9 +1,9 @@
-import React from "react"
+import React from "react";
 
 type Props = {
-  children: string
-  className: string
-}
+  children: string;
+  className?: string;
+};
 
 const Heading = ({ children, className }: Props) => {
   return (
@@ -12,7 +12,7 @@ const Heading = ({ children, className }: Props) => {
     >
       {children}
     </h2>
-  )
-}
+  );
+};
 
-export default Heading
+export default Heading;
