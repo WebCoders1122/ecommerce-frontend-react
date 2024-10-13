@@ -5,8 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchProductByIdAsync, selectProduct } from "../productListSlice";
 import { AppDispatch } from "../../../app/store";
-import { addToCartAsync } from "../../cart/cartSlice";
+import {
+  addToCartAsync,
+  fetchCartProductsByUserIdAsync,
+} from "../../cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
+import { fetchCartProductsByUserId } from "../../cart/cartAPI";
 
 type Props = {};
 
@@ -65,6 +69,7 @@ const productss = {
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 };
 const reviews = { href: "#", average: 4, totalCount: 117 };
+console.log("abc");
 //
 function classNames(...classes: any) {
   // todo: fix the type here of (...classes)
@@ -100,6 +105,7 @@ const ProductDetails = (props: Props) => {
       user: user.id,
     };
     dispatch(addToCartAsync(productToAdd));
+    dispatch(fetchCartProductsByUserIdAsync(user.id));
   };
 
   return (

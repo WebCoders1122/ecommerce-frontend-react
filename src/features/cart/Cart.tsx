@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch } from "../../app/store";
 import Heading from "../../components/PrimeComponents/Heading";
 import { selectLoggedInUser } from "../auth/authSlice";
 import {
-  fetchCartProductsByUserIdAsync,
+  removeFromCartAsync,
   selectCartProducts,
   updateProductQuantityAsync,
 } from "./cartSlice";
@@ -30,11 +29,14 @@ const Cart = () => {
       dispatch(updateProductQuantityAsync(updatedProduct));
     }
   };
-
-  useEffect(() => {
-    console.log("dispa");
-    dispatch(fetchCartProductsByUserIdAsync(user.id));
-  }, [dispatch]);
+  //to remove products from cart
+  const handleRemove = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    product: ProductToAddType,
+  ) => {
+    dispatch(removeFromCartAsync(product));
+  };
+  console.log(products);
 
   return (
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-14">
@@ -92,6 +94,7 @@ const Cart = () => {
 
                       <div className="flex">
                         <button
+                          onClick={e => handleRemove(e, product)}
                           type="button"
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                         >

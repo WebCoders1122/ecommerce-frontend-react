@@ -13,7 +13,10 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ReactNode } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectAllProducts } from "../features/ProductList/productListSlice";
+import { selectCartProducts } from "../features/cart/cartSlice";
 
 // links for navigation menu
 const navigation = [
@@ -28,6 +31,7 @@ function classNames(...classes: string[]) {
 }
 
 const Navbar = ({ children }: { children?: ReactNode }) => {
+  const products: ProductToAddType[] = useSelector(selectCartProducts);
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -88,9 +92,11 @@ const Navbar = ({ children }: { children?: ReactNode }) => {
               <span className="sr-only">View notifications</span>
               <ShoppingCartIcon aria-hidden="true" className="h-8 w-8" />
             </Link>
-            <span className="inline-flex items-center rounded-md mb-8 -ml-4 bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 z-10">
-              3
-            </span>
+            {products.length ? (
+              <span className="inline-flex items-center rounded-md mb-8 -ml-4 bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 z-10">
+                {products.length}
+              </span>
+            ) : null}
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">

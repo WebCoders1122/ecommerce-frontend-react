@@ -3,6 +3,7 @@ import { createAppSlice } from "../../app/createAppSlice";
 import {
   addToCart,
   fetchCartProductsByUserId,
+  removeFromCart,
   updateProductQuantity,
 } from "./cartAPI";
 
@@ -43,6 +44,14 @@ export const updateProductQuantityAsync = createAsyncThunk(
     return response;
   },
 );
+// to remove product from cart
+export const removeFromCartAsync = createAsyncThunk(
+  "cart/removeFromCart",
+  async (product: ProductToAddType) => {
+    const response = await removeFromCart(product);
+    return response;
+  },
+);
 
 export const cartSlice = createAppSlice({
   name: "cart",
@@ -80,11 +89,26 @@ export const cartSlice = createAppSlice({
           product => product.id === action.payload.id,
         );
         state.cartProducts[index] = action.payload;
-        console.log(action.payload);
       })
       .addCase(updateProductQuantityAsync.rejected, state => {
         state.loading = false;
         state.error = "Failed to update product quantity";
+      })
+      .addCase(removeFromCartAsync.pending, state => {
+        state.loading = true;
+      })
+      .addCase(removeFromCartAsync.fulfilled, (state, action) => {
+        console.log("action.payload");
+        state.loading = false;
+        let index = state.cartProducts.findIndex(
+          product => product.id === action.payload.id,
+        );
+
+        state.cartProducts.splice(index, 1);
+      })
+      .addCase(removeFromCartAsync.rejected, state => {
+        state.loading = false;
+        state.error = "Failed to remove from cart";
       });
   },
   selectors: {
