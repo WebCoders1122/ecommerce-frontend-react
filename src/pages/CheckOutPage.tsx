@@ -16,7 +16,12 @@ import {
   addNewAddressAsync,
   selectLoggedInUser,
 } from "../features/auth/authSlice";
-import { createNewOrderAsync } from "../features/order/orderSlice";
+import {
+  createNewOrderAsync,
+  selectCurrentOrder,
+  selectOrders,
+  selectPlacement,
+} from "../features/order/orderSlice";
 
 type Props = {};
 
@@ -28,7 +33,7 @@ const CheckOutPage = (props: Props) => {
   const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(
     null,
   );
-  const [selectedPayment, setSelectedPayment] = useState("");
+  const [selectedPayment, setSelectedPayment] = useState("COD");
   const paymentOptions = ["COD", "Card Payment"];
   // for cart
   const cartProducts = useSelector(selectCartProducts);
@@ -99,10 +104,21 @@ const CheckOutPage = (props: Props) => {
     } else {
       alert("Please select a payment method and Address");
     }
+
+    // todo: redirect to success page on successfull order complition
+    // todo: update to stock record
+    // todo: clrear cart after successfull order
   };
+  //to check order success
+  const orderPlacement: boolean = useSelector(selectPlacement);
+  const order = useSelector(selectCurrentOrder);
+  console.log(selectedAddress, selectedPayment);
   return (
     <>
       {!cartProducts.length && <Navigate to={"/"}></Navigate>}
+      {orderPlacement && (
+        <Navigate to={`/order-success/${order.id}`}></Navigate>
+      )}
       <Navbar />
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-6 flex flex-col md:flex-row items-start justify-between gap-3">
         {/* checkout form started */}
@@ -358,7 +374,8 @@ const CheckOutPage = (props: Props) => {
                     id="address_selection"
                     name="address"
                     type="radio"
-                    onChange={() => setSelectedAddress(address)}
+                    checked={selectedAddress?.id === address.id}
+                    onClick={() => setSelectedAddress(address)}
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                   <label
@@ -419,6 +436,7 @@ const CheckOutPage = (props: Props) => {
                   id={item}
                   name="payment"
                   type="radio"
+                  checked={selectedPayment === item}
                   onChange={() => setSelectedPayment(item)}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                 />

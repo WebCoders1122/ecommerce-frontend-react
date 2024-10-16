@@ -4,12 +4,14 @@ import { createNewOrder } from "./orderAPI";
 
 export interface OrderSliceState {
   orders: OrderType[];
-  status: "idle" | "loading" | "failed";
+  placement: boolean;
+  currentOrder: OrderType;
 }
 
 const initialState: OrderSliceState = {
   orders: [],
-  status: "idle",
+  placement: false,
+  currentOrder: {} as OrderType,
 };
 
 //create new order
@@ -27,12 +29,15 @@ export const cartSlice = createAppSlice({
   reducers: create => ({}),
   extraReducers: builder => {
     builder.addCase(createNewOrderAsync.fulfilled, (state, action) => {
-      state.status = "idle";
+      state.placement = true;
       state.orders.push(action.payload);
+      state.currentOrder = action.payload;
     });
   },
   selectors: {
     selectOrders: state => state.orders,
+    selectPlacement: state => state.placement,
+    selectCurrentOrder: state => state.currentOrder,
   },
 });
 
@@ -41,6 +46,7 @@ export const cartSlice = createAppSlice({
 //   cartSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectOrders } = cartSlice.selectors;
+export const { selectOrders, selectPlacement, selectCurrentOrder } =
+  cartSlice.selectors;
 
 export default cartSlice.reducer;
