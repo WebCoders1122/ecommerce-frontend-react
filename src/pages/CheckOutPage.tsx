@@ -374,7 +374,6 @@ const CheckOutPage = (props: Props) => {
                     id="address_selection"
                     name="address"
                     type="radio"
-                    checked={selectedAddress?.id === address.id}
                     onClick={() => setSelectedAddress(address)}
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />

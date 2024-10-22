@@ -4,6 +4,7 @@ import {
   addToCart,
   fetchCartProductsByUserId,
   removeFromCart,
+  resetCart,
   updateProductQuantity,
 } from "./cartAPI";
 
@@ -49,6 +50,15 @@ export const removeFromCartAsync = createAsyncThunk(
   "cart/removeFromCart",
   async (product: ProductToAddType) => {
     const response = await removeFromCart(product);
+    return response;
+  },
+);
+
+// to reset cart after placing order
+export const resetCartAsync = createAsyncThunk(
+  "cart/resetCart",
+  async (userId: string) => {
+    const response = await resetCart(userId);
     return response;
   },
 );
@@ -109,6 +119,17 @@ export const cartSlice = createAppSlice({
       .addCase(removeFromCartAsync.rejected, state => {
         state.loading = false;
         state.error = "Failed to remove from cart";
+      })
+      .addCase(resetCartAsync.pending, state => {
+        state.loading = true;
+      })
+      .addCase(resetCartAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cartProducts = action.payload ? [] : state.cartProducts;
+      })
+      .addCase(resetCartAsync.rejected, state => {
+        state.loading = false;
+        state.error = "Failed to reset cart";
       });
   },
   selectors: {

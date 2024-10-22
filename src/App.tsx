@@ -18,6 +18,7 @@ import { AppDispatch } from "./app/store";
 import { fetchCartProductsByUserIdAsync } from "./features/cart/cartSlice";
 import NotFound404 from "./pages/NotFound404";
 import { OrderSuccessPage } from "./pages/OrderSuccessPage";
+import MyOrdersPage from "./pages/MyOrdersPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -61,6 +62,14 @@ const router = createBrowserRouter(
         element={
           <Protect>
             <OrderSuccessPage />
+          </Protect>
+        }
+      />
+      <Route
+        path="/orders"
+        element={
+          <Protect>
+            <MyOrdersPage />
           </Protect>
         }
       />

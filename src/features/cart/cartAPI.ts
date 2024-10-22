@@ -35,3 +35,12 @@ export const removeFromCart = async (product: ProductToAddType) => {
   const data = await response.json();
   return data;
 };
+
+// to reset cart
+export const resetCart = async (userId: string) => {
+  const cartProducts = await fetchCartProductsByUserId(userId);
+  for (const product of cartProducts) {
+    await removeFromCart(product);
+  }
+  return true;
+};

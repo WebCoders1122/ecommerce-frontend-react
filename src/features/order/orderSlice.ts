@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
-import { createNewOrder } from "./orderAPI";
+import { createNewOrder, fetchUserOrderById } from "./orderAPI";
 
 export interface OrderSliceState {
   orders: OrderType[];
@@ -22,17 +22,34 @@ export const createNewOrderAsync = createAsyncThunk(
     return response;
   },
 );
+// to fetch all orders by userid
+export const fetchUserOrderByIdAsync = createAsyncThunk(
+  "order/fetchUserOrderById",
+  async (userId: string) => {
+    const response = await fetchUserOrderById(userId);
+    return response;
+  },
+);
 
 export const cartSlice = createAppSlice({
   name: "order",
   initialState,
-  reducers: create => ({}),
+  reducers: create => ({
+    resetOrder: create.reducer((state, action) => {
+      state.placement = false;
+      state.currentOrder = {} as OrderType;
+    }),
+  }),
   extraReducers: builder => {
-    builder.addCase(createNewOrderAsync.fulfilled, (state, action) => {
-      state.placement = true;
-      state.orders.push(action.payload);
-      state.currentOrder = action.payload;
-    });
+    builder
+      .addCase(createNewOrderAsync.fulfilled, (state, action) => {
+        state.placement = true;
+        state.orders.push(action.payload);
+        state.currentOrder = action.payload;
+      })
+      .addCase(fetchUserOrderByIdAsync.fulfilled, (state, action) => {
+        state.orders = action.payload;
+      });
   },
   selectors: {
     selectOrders: state => state.orders,
@@ -42,8 +59,7 @@ export const cartSlice = createAppSlice({
 });
 
 // Action creators are generated for each case reducer function.
-// export const { decrement, increment, incrementByAmount, incrementAsync } =
-//   cartSlice.actions;
+export const { resetOrder } = cartSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
 export const { selectOrders, selectPlacement, selectCurrentOrder } =
