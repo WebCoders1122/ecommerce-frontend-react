@@ -19,6 +19,8 @@ import { fetchCartProductsByUserIdAsync } from "./features/cart/cartSlice";
 import NotFound404 from "./pages/NotFound404";
 import { OrderSuccessPage } from "./pages/OrderSuccessPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
+import MyProfilePage from "./pages/MyProfilePage";
+import { getUserInfoAsync } from "./features/user/userSlice";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -73,18 +75,30 @@ const router = createBrowserRouter(
           </Protect>
         }
       />
+      <Route
+        path="/profile"
+        element={
+          <Protect>
+            <MyProfilePage />
+          </Protect>
+        }
+      />
       <Route path="*" element={<NotFound404 />} />
     </Route>,
   ),
 );
+
 const App = () => {
   //fetching cart products as user logs in
-  const user = useSelector(selectLoggedInUser);
+  const loggedInUser = useSelector(selectLoggedInUser);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    //fetch cart products
-    if (user) dispatch(fetchCartProductsByUserIdAsync(user?.id));
-  }, [dispatch, user]);
+    //fetch cart products and userinfo
+    if (loggedInUser) {
+      dispatch(getUserInfoAsync(loggedInUser.id));
+      dispatch(fetchCartProductsByUserIdAsync(loggedInUser?.id));
+    }
+  }, [dispatch, loggedInUser]);
   return <RouterProvider router={router} />;
 };
 export default App;

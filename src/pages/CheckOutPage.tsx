@@ -1,34 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import Heading from "../components/PrimeComponents/Heading";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
+import { AppDispatch } from "../app/store";
 import Navbar from "../components/Navbar";
+import Heading from "../components/PrimeComponents/Heading";
 import {
   removeFromCartAsync,
   selectCartProducts,
   updateProductQuantityAsync,
 } from "../features/cart/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../app/store";
 //react hook forms
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-import {
-  addNewAddressAsync,
-  selectLoggedInUser,
-} from "../features/auth/authSlice";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
   createNewOrderAsync,
   selectCurrentOrder,
-  selectOrders,
   selectPlacement,
 } from "../features/order/orderSlice";
+import { addNewAddressAsync, selectUserInfo } from "../features/user/userSlice";
 
 type Props = {};
 
 const CheckOutPage = (props: Props) => {
   //user and user addresses for chekcout page
-  const user = useSelector(selectLoggedInUser);
-  const addresses: AddressType[] = user.addresses;
+  const user = useSelector(selectUserInfo);
+  const addresses: AddressType[] = user.addresses || [];
   //selected address payments
   const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(
     null,

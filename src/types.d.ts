@@ -100,3 +100,10 @@ type OrderType = {
   paymentMethod: string;
   status: string;
 };
+
+//user ffeat
+type UserInfoType = {
+  id: string;
+  email: string;
+  addresses?: AddressType[];
+};

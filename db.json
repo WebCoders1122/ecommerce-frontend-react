@@ -120,6 +120,34 @@
       },
       "paymentMethod": "Card Payment",
       "status": "Pending"
+    },
+    {
+      "id": "e37d",
+      "userId": "7b81",
+      "products": [
+        {
+          "id": "cc82",
+          "title": "Eyeshadow Palette with Mirror",
+          "price": 19.99,
+          "quantity": 1,
+          "image": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
+          "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
+          "user": "7b81"
+        }
+      ],
+      "totalPrice": 19.99,
+      "totalProducts": 1,
+      "address": {
+        "firstName": "Habib ur Rehman",
+        "lastName": "Shakir",
+        "email": "wagambo.com@gmail.com",
+        "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
+        "city": "Mianwali",
+        "region": "Punjab",
+        "postalCode": "42030"
+      },
+      "paymentMethod": "COD",
+      "status": "Pending"
     }
   ],
   "brands": [

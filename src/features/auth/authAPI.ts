@@ -5,20 +5,17 @@ export const registerUser = (registerData: {
   email: string;
   password: string;
 }) => {
-  return new Promise<{ email: string; id: string; addresses: AddressType[] }>(
-    async (resolve, reject) => {
-      const response: AxiosResponse = await axios.post(
-        "http://localhost:8080/users",
-        JSON.stringify(registerData),
-      );
-      const user: { email: string; id: string; addresses: AddressType[] } = {
-        email: response.data.email,
-        id: response.data.id,
-        addresses: response.data.addresses,
-      };
-      resolve(user);
-    },
-  );
+  return new Promise<{ email: string; id: string }>(async (resolve, reject) => {
+    const response: AxiosResponse = await axios.post(
+      "http://localhost:8080/users",
+      JSON.stringify(registerData),
+    );
+    const user: { email: string; id: string } = {
+      email: response.data.email,
+      id: response.data.id,
+    };
+    resolve(user);
+  });
 };
 
 // to login user
@@ -41,42 +38,4 @@ export const loginUser = async (loginData: {
     };
     return user;
   }
-};
-
-// to add new address
-export const addNewAddress = async ({
-  address,
-  userId,
-}: {
-  address: AddressType;
-  userId: string;
-}) => {
-  const user = await axios
-    .get(`http://localhost:8080/users/${userId}`)
-    .then(res => res.data);
-  if (!user) {
-    throw new Error("User not found");
-  }
-  console.log(user, "user");
-  const newUser = user.addresses
-    ? {
-        ...user,
-        addresses: [...user?.addresses, address],
-      }
-    : {
-        ...user,
-        addresses: [address],
-      };
-
-  console.log(newUser, "new");
-
-  const response = await fetch(`http://localhost:8080/users/${userId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newUser),
-  });
-  const data = await response.json();
-  return data;
 };

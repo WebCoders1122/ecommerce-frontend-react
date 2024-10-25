@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch } from "../../app/store";
 import Heading from "../../components/PrimeComponents/Heading";
-import { selectLoggedInUser } from "../auth/authSlice";
+import { selectUserInfo } from "../user/userSlice";
 import {
   removeFromCartAsync,
   selectCartProducts,
@@ -12,7 +12,7 @@ import {
 const Cart = () => {
   const products = useSelector(selectCartProducts);
   const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const totalPrice = +products
     .reduce((acc, item) => acc + item.price * item.quantity, 0)
     .toFixed(2);
