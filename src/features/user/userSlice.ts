@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
-import { addNewAddress, getUserInfo } from "./userAPI";
+import { addNewAddress, getUserInfo, updateUser } from "./userAPI";
 
 export interface UserSliceState {
   userInfo: UserInfoType;
@@ -30,6 +30,15 @@ export const addNewAddressAsync = createAsyncThunk(
   },
 );
 
+// update user async
+export const updateUserAsync = createAsyncThunk(
+  "user/updateUser",
+  async (user: UserInfoType) => {
+    const response = await updateUser(user);
+    return response;
+  },
+);
+
 export const userSlice = createAppSlice({
   name: "user",
   initialState,
@@ -40,6 +49,9 @@ export const userSlice = createAppSlice({
         state.userInfo = action.payload;
       })
       .addCase(addNewAddressAsync.fulfilled, (state, action) => {
+        state.userInfo = action.payload;
+      })
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
         state.userInfo = action.payload;
       });
   },

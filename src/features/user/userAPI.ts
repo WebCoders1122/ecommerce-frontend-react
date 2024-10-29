@@ -62,3 +62,17 @@ export const addNewAddress = async ({
   const data = await response.json();
   return data;
 };
+
+//update user
+export const updateUser = async (user: UserInfoType) => {
+  const response = await fetch(`http://localhost:8080/users/${user.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+  const data = await response.json();
+  console.log(data, "update user");
+  return data;
+};

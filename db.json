@@ -413,58 +413,22 @@
       "password": "habib123",
       "addresses": [
         {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
+          "firstName": "John",
+          "lastName": "Ceena",
+          "email": "johnceena0808@gmail.com",
+          "streetAddress": "ABC, street, xyz country",
+          "city": "Sargodha",
           "region": "Punjab",
-          "postalCode": "42030"
+          "postalCode": "33252"
         },
         {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "Habib ur Rehman",
-          "lastName": "Shakir",
-          "email": "wagambo.com@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "Punjab",
-          "postalCode": "42030"
-        },
-        {
-          "firstName": "sdfe",
-          "lastName": "dd",
-          "email": "dastaaneislam@gmail.com",
-          "streetAddress": "Cat V # 33, c2 colony, Chashma Barrage, Tehsil Piplan",
-          "city": "Mianwali",
-          "region": "s",
-          "postalCode": "2342"
+          "firstName": "Maan",
+          "lastName": "g",
+          "email": "maan@gmail.com",
+          "streetAddress": "Flat # 52, ABC building new york",
+          "city": "New York",
+          "region": "United States",
+          "postalCode": "xxeess"
         }
       ]
     },
@@ -479,7 +443,17 @@
       "password": "habib123"
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "id": "d42d",
+      "title": "Eyeshadow Palette with Mirror",
+      "price": 19.99,
+      "quantity": 3,
+      "image": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
+      "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
+      "user": "7b81"
+    }
+  ],
   "products": [
     {
       "id": "1",
